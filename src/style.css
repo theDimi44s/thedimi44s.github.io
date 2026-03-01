@@ -1,0 +1,146 @@
+:root {
+  --bg-dark: #0a0a0c;
+  --bg-card: #141419;
+  --text-main: #e2e2e5;
+  --text-muted: #a1a1aa;
+  --accent-purple: #8b5cf6;
+  --accent-orange: #ff5722;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.hero {
+  margin-top: 15vh;
+  text-align: left;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-orange);
+  background-color: rgba(255, 87, 34, 0.1);
+  border: 1px solid rgba(255, 87, 34, 0.2);
+  border-radius: 50px;
+  margin-bottom: 1.5rem;
+}
+
+h1 {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.highlight {
+  color: var(--accent-purple);
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  max-width: 600px;
+  margin-bottom: 2rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn.primary {
+  background-color: var(--accent-purple);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.btn.primary:hover {
+  background-color: #7c3aed;
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn.secondary {
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid rgba(226, 226, 229, 0.1);
+}
+
+.btn.secondary:hover {
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+}
+
+/* --- СЕКЦІЯ ПРОЄКТІВ --- */
+
+.projects-section {
+  margin-top: 6rem;
+  padding-top: 2rem;
+}
+
+.projects-section h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--text-main);
+  border-bottom: 2px solid var(--bg-card);
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.projects-grid {
+  display: grid;
+  /* Автоматично підлаштовує кількість колонок залежно від ширини екрана */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  background-color: var(--bg-card);
+  border: 1px solid rgba(226, 226, 229, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-purple);
+}
+
+.project-card h3 {
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  color: var(--text-main);
+}
+
+.project-card p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
