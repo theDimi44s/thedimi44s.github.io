@@ -144,3 +144,67 @@ h1 {
   font-size: 0.95rem;
   line-height: 1.5;
 }
+
+
+/* --- СЕКЦІЯ КОНТАКТІВ --- */
+.contact-section {
+  margin-top: 6rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  background-color: var(--bg-card);
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(226, 226, 229, 0.05);
+}
+
+.contact-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.contact-section p {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+/* Контейнер для іконок */
+.social-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Стилі самих іконок */
+.social-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(226, 226, 229, 0.05);
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+}
+
+/* Розмір векторних малюнків (SVG) */
+.social-icon svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor; /* Колір береться з батьківського елемента */
+  transition: transform 0.3s ease;
+}
+
+/* Ефект при наведенні (Hover) */
+.social-icon:hover {
+  background-color: var(--accent-purple);
+  color: #ffffff;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+}
+
+.social-icon:hover svg {
+  transform: scale(1.1); /* Іконка трохи збільшується */
+}
