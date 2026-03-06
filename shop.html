@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Барахолка | Yevtushenko.log</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <link rel="stylesheet" href="./src/shop.css"> 
+</head>
+<body>
+
+<!-- Навігація -->
+  <div class="container">
+    
+    <header class="hero shop-hero" style="margin-top: 5vh; margin-bottom: 2rem; display: block;">
+      <a href="/" class="btn secondary" style="display: inline-block; margin-bottom: 2rem;">← На головну</a>
+      <h1>Моя <span class="highlight">Барахолка</span></h1>
+      <p class="subtitle">Особистий розпродаж техніки, ігор та інших речей, які шукають нового власника.</p>
+    </header>
+
+    <!-- Інформація про доставку та оплату -->
+    <section class="delivery-info">
+      <div class="info-card">
+        <h3>📦 Доставка та оплата</h3>
+        <p><b>Харків:</b> Можлива особиста зустріч за домовленістю.</p>
+        <p><b>По Україні:</b> Відправляю Новою Поштою (накладений платіж або передплата).</p>
+        <p>Для замовлення просто натисніть "Купити" — це відкриє чат зі мною в Telegram з уже готовим повідомленням.</p>
+      </div>
+    </section>
+
+    <!-- Фільтри та категорії -->
+    <section class="shop-controls">
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">Всі речі</button>
+        <button class="filter-btn" data-filter="tech">Техніка</button>
+        <button class="filter-btn" data-filter="games">Ігри та консолі</button>
+        <button class="filter-btn" data-filter="other">Різне</button>
+      </div>
+    </section>
+
+    <section class="shop-grid">
+    
+    <!-- Товар 1 -->
+      <div class="product-card" data-category="tech">
+        <div class="product-image">
+          <span class="condition-badge used">Вживане</span>
+          <img src="./public/ShopImg/tov_example.jpg" alt="Товар 1">
+        </div>
+        
+        <div class="product-details">
+          <h3 class="product-title">Бездротовий маршрутизатор TP-Link</h3>
+          <p class="product-price">450 ₴</p>
+          
+          <div class="product-actions">
+            <button class="btn secondary specs-btn">Характеристики</button>
+            <button class="btn orange buy-btn">Купити</button>
+          </div>
+        </div>
+
+        <div class="hidden-specs" hidden>
+          <p><b>Стан:</b> Ідеальний, працював близько року.</p>
+          <p><b>Комплектація:</b> Роутер, блок живлення, коробка загублена.</p>
+          <p><b>Причина продажу:</b> Перехід на гігабітний інтернет та оновлення обладнання.</p>
+          <p>Відмінний варіант для базових задач та стабільного Wi-Fi.</p>
+        </div>
+      </div>
+    
+    <!-- Товар 2 -->
+      <div class="product-card" data-category="games">
+        <div class="product-image">
+          <span class="condition-badge new">Нове</span>
+          <img src="./public/ShopImg/tov_example.jpg" alt="Товар 2">
+        </div>
+        
+        <div class="product-details">
+          <h3 class="product-title">Гра для PS5 (Запакована)</h3>
+          <p class="product-price">1200 ₴</p>
+          
+          <div class="product-actions">
+            <button class="btn secondary specs-btn">Характеристики</button>
+            <button class="btn orange buy-btn">Купити</button>
+          </div>
+        </div>
+
+        <div class="hidden-specs" hidden>
+          <p><b>Стан:</b> Абсолютно нова, у заводській плівці.</p>
+          <p><b>Платформа:</b> PlayStation 5.</p>
+          <p><b>Мова:</b> Присутні українські субтитри.</p>
+          <p>Отримав у подарунок, але таку гру вже маю в цифровій бібліотеці.</p>
+        </div>
+      </div>
+
+      <!-- Товар 3 -->
+
+       <div class="product-card" data-category="games">
+        <div class="product-image">
+          <span class="condition-badge new">Нове</span>
+          <img src="./public/ShopImg/tov_example.jpg" alt="Товар 2">
+        </div>
+        
+        <div class="product-details">
+          <h3 class="product-title">Гра для Nintendo (Запакована)</h3>
+          <p class="product-price">199 ₴</p>
+          
+          <div class="product-actions">
+            <button class="btn secondary specs-btn">Характеристики</button>
+            <button class="btn orange buy-btn">Купити</button>
+          </div>
+        </div>
+
+        <div class="hidden-specs" hidden>
+          <p><b>Стан:</b> Абсолютно нова, у заводській плівці.</p>
+          <p><b>Платформа:</b> Nintendo DS Lite.</p>
+          <p><b>Мова:</b> Присутні українські субтитри.</p>
+          <p>Отримав у подарунок, але таку гру вже маю в цифровій бібліотеці.</p>
+        </div>
+      </div>
+
+      <!-- Товар 4 -->
+
+    </section>
+
+  </div> <div class="specs-modal" id="specsModal">
+    <div class="specs-content">
+      <button class="close-specs" id="closeSpecs">&times;</button>
+      <h3 id="modalProductTitle">Назва товару</h3>
+      <div class="specs-body" id="modalProductSpecs">
+        Характеристики...
+      </div>
+    </div>
+  </div>
+
+  <script src="./src/shop.js"></script>
+</body>
+</html>

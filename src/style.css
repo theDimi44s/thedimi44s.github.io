@@ -1,3 +1,4 @@
+/* --- БАЗОВІ НАЛАШТУВАННЯ ТА ПАЛІТРА --- */
 :root {
   --bg-dark: #0a0a0c;
   --bg-card: #141419;
@@ -26,11 +27,40 @@ body {
   padding: 2rem;
 }
 
+/* --- ГОЛОВНИЙ ЕКРАН (HERO) ТА ФОТО --- */
 .hero {
-  margin-top: 15vh;
-  text-align: left;
+  margin-top: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
 }
 
+.hero-content {
+  flex: 1;
+}
+
+.hero-image {
+  flex-shrink: 0;
+}
+
+/* Стилі для фотографії профілю */
+.profile-photo {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--bg-card);
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.3); /* Фіолетове світіння */
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.profile-photo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 40px rgba(255, 87, 34, 0.4); /* Змінюється на помаранчеве при наведенні */
+}
+
+/* --- ТЕКСТОВІ ЕЛЕМЕНТИ ГОЛОВНОГО ЕКРАНУ --- */
 .badge {
   display: inline-block;
   padding: 0.25rem 0.75rem;
@@ -60,12 +90,18 @@ h1 {
   margin-bottom: 2rem;
 }
 
+/* --- КНОПКИ --- */
 .actions {
-  display: flex;
-  gap: 1rem;
+  display: flex; /* Виводить кнопки в ряд */
+  flex-wrap: wrap; /* Дозволяє кнопкам переноситися на новий рядок при недостатній ширині */
+  gap: 1rem; /* Відстань між кнопками */
 }
 
 .btn {
+  white-space: nowrap; /* 👈 Забороняє перенесення тексту на новий рядок */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   text-decoration: none;
@@ -73,6 +109,7 @@ h1 {
   transition: all 0.3s ease;
 }
 
+/* Фіолетова кнопка (Primary) */
 .btn.primary {
   background-color: var(--accent-purple);
   color: #fff;
@@ -85,6 +122,37 @@ h1 {
   transform: translateY(-2px);
 }
 
+/* Червона кнопка (Third) */
+/* Спокійний червоний колір */
+.btn.red {
+  background-color: #c04b4b; /* М'який червоний */
+  color: #ffffff;
+  border: 1px solid #c04b4b; /* Рамка в тон фону */
+  transition: all 0.3s ease;
+}
+
+/* Ефект при наведенні мишки */
+.btn.red:hover {
+  background-color: #a33f3f; /* Трохи темніший при наведенні */
+  border-color: #a33f3f;
+  transform: translateY(-2px); /* Легке підняття (якщо використовуєш таке на інших кнопках) */
+  box-shadow: 0 4px 12px rgba(192, 75, 75, 0.3); /* Легке червоне світіння */
+}
+
+/* Помаранчева кнопка (Orange) */
+.btn.orange {
+  background-color: var(--accent-orange);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(255, 87, 34, 0.3);
+}
+
+.btn.orange:hover {
+  background-color: #e64a19;
+  box-shadow: 0 6px 20px rgba(255, 87, 34, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Темна кнопка (Secondary) */
 .btn.secondary {
   background-color: var(--bg-card);
   color: var(--text-main);
@@ -94,10 +162,31 @@ h1 {
 .btn.secondary:hover {
   border-color: var(--accent-orange);
   color: var(--accent-orange);
+  transform: translateY(-2px);
+}
+
+/* --- АДАПТАЦІЯ ДЛЯ МОБІЛЬНИХ ТЕЛЕФОНІВ --- */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column-reverse; /* Текст стає під фотографією */
+    text-align: center;
+    gap: 2rem;
+    margin-top: 5vh;
+  }
+  
+  .subtitle {
+    margin: 0 auto 2rem auto;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap; /* Кнопки гарно переносяться на новий рядок */
+    align-items: flex-start;     /* Забороняє кнопкам розтягуватися по висоті */
+    gap: 1rem;
+  }
 }
 
 /* --- СЕКЦІЯ ПРОЄКТІВ --- */
-
 .projects-section {
   margin-top: 6rem;
   padding-top: 2rem;
@@ -114,7 +203,6 @@ h1 {
 
 .projects-grid {
   display: grid;
-  /* Автоматично підлаштовує кількість колонок залежно від ширини екрана */
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
 }
@@ -145,8 +233,7 @@ h1 {
   line-height: 1.5;
 }
 
-
-/* --- СЕКЦІЯ КОНТАКТІВ --- */
+/* --- СЕКЦІЯ КОНТАКТІВ ТА СОЦМЕРЕЖ --- */
 .contact-section {
   margin-top: 6rem;
   margin-bottom: 2rem;
@@ -193,7 +280,7 @@ h1 {
 .social-icon svg {
   width: 24px;
   height: 24px;
-  fill: currentColor; /* Колір береться з батьківського елемента */
+  fill: currentColor; 
   transition: transform 0.3s ease;
 }
 
@@ -207,4 +294,235 @@ h1 {
 
 .social-icon:hover svg {
   transform: scale(1.1); /* Іконка трохи збільшується */
+}
+
+/* --- СЕКЦІЯ BENTO BOX --- */
+.bento-section {
+  margin-top: 6rem;
+  margin-bottom: 4rem;
+}
+
+.bento-section h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--text-main);
+}
+
+.bento-grid {
+  display: grid;
+  /* Базова сітка для мобільних пристроїв: одна колонка */
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  grid-auto-rows: minmax(150px, auto); /* Мінімальна висота картки */
+}
+
+.bento-card {
+  background-color: var(--bg-card);
+  border: 1px solid rgba(226, 226, 229, 0.05);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bento-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.bento-card h3 {
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bento-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* --- АДАПТИВ ДЛЯ ПК ТА ПЛАНШЕТІВ --- */
+@media (min-width: 768px) {
+  .bento-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .bento-wide {
+    grid-column: span 2;
+  }
+  
+  .bento-tall {
+    grid-row: span 2;
+    justify-content: flex-start;
+  }
+  
+  /* Новий клас для картки, що займає весь нижній ряд */
+  .bento-full {
+    grid-column: span 3;
+    flex-direction: row; /* На комп'ютері текст зліва, віджет справа */
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  
+  .gaming-info {
+    flex: 1;
+  }
+}
+
+/* --- СТИЛІ ДЛЯ ВІДЖЕТА STEAM --- */
+.steam-widget {
+  display: block;
+  text-decoration: none;
+  max-width: 350px;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.steam-widget:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.steam-badge {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Запасна кнопка, якщо сторонній сервіс картинок недоступний */
+.steam-fallback {
+  display: none; /* Приховано за замовчуванням */
+  background: linear-gradient(135deg, #171a21 0%, #1b2838 100%);
+  color: #c7d5e0;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-weight: 500;
+  border: 1px solid #2a475e;
+}
+
+/* --- СЕКЦІЯ ОСТАННІ ОНОВЛЕННЯ --- */
+.updates-section {
+  margin-bottom: 6rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+}
+
+.section-header h2 {
+  font-size: 2rem;
+  margin: 0;
+  color: var(--text-main);
+}
+
+.view-all {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.3s;
+  padding-bottom: 0.5rem;
+}
+
+.view-all:hover {
+  color: var(--accent-orange);
+}
+
+.updates-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+/* На планшетах і ПК робимо 2 колонки */
+@media (min-width: 768px) {
+  .updates-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.update-card {
+  background-color: var(--bg-card);
+  border: 1px solid rgba(226, 226, 229, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.update-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Ярлики категорій над заголовком */
+.update-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.update-badge.orange {
+  background-color: rgba(255, 87, 34, 0.1); /* Прозорий фон від var(--accent-orange) */
+  color: var(--accent-orange);
+}
+
+.update-badge.red {
+  background-color: rgba(192, 75, 75, 0.1);
+  color: #c04b4b; /* Спокійний червоний */
+}
+
+.update-date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.update-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-main);
+}
+
+.update-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+  flex-grow: 1; /* Змушує посилання завжди притискатися до низу картки */
+}
+
+.update-link {
+  color: var(--text-main);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.update-card:hover .update-link {
+  color: var(--accent-orange);
+  border-color: var(--accent-orange);
 }

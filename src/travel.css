@@ -1,0 +1,263 @@
+/* --- ЗАГОЛОВОК І ОПИС КАРТКИ --- */
+
+.timeline-text h4 {
+  font-size: 0.95rem;          /* Трохи менший розмір за h3 */
+  font-weight: 400;            /* Нормальна товщина (не жирний) */
+  color: #a0a0a5;              /* Світло-сірий колір, щоб не відвертати увагу від заголовка. Заміни на var(--text-muted) якщо у тебе є така змінна */
+  margin-top: 0.5rem;          /* Відступ зверху від h3 */
+  margin-bottom: 0;            /* Забираємо нижній відступ */
+  line-height: 1.5;            /* Зручний міжрядковий інтервал для довгого тексту */
+  display: block;   
+  font-style: italic;           /* Гарантуємо, що це буде окремий блок */
+}
+
+/* --- ГОРИЗОНТАЛЬНА ПАНЕЛЬ ФІЛЬТРІВ --- */
+.filters-container {
+  position: sticky;
+  top: 10px;
+  z-index: 100;
+  margin-bottom: 3rem;
+}
+
+.filters-panel {
+  background-color: rgba(20, 20, 25, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 226, 229, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.filters-dropdowns {
+  display: flex;
+  gap: 1rem;
+}
+
+.filter-select {
+  flex: 1;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  border: 1px solid rgba(226, 226, 229, 0.1);
+  padding: 0.75rem;
+  border-radius: 8px;
+  outline: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.categories-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.category-btn {
+  background: var(--bg-dark);
+  border: 1px solid rgba(226, 226, 229, 0.1);
+  color: var(--text-muted);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.category-btn:hover {
+  background-color: rgba(139, 92, 246, 0.1);
+  color: var(--text-main);
+}
+
+.category-btn.active {
+  background-color: var(--accent-purple);
+  color: #fff;
+  border-color: var(--accent-purple);
+}
+
+.category-btn.category-btn-red:hover {
+  background-color: rgba(239, 68, 68, 0.1); 
+  color: #ef4444;
+}
+
+.category-btn.category-btn-red.active {
+  background-color: #ef4444;
+  border-color: #ef4444;
+  color: #fff;
+}
+
+/* --- ШАХОВА ЛІНІЯ ЧАСУ (ДЕКСТОП) --- */
+.timeline {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  background-color: rgba(139, 92, 246, 0.3); 
+  top: 0; bottom: 0; left: 50%;
+  transform: translateX(-50%);
+}
+
+.timeline-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.timeline-text, .timeline-content {
+  width: 45%;
+}
+
+.timeline-dot {
+  position: absolute;
+  width: 16px; height: 16px;
+  background-color: var(--accent-orange);
+  border: 4px solid var(--bg-dark);
+  border-radius: 50%;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  box-shadow: 0 0 10px rgba(255, 87, 34, 0.5);
+}
+
+/* Непарні картки (Текст зліва, Відео справа) */
+.timeline-item:nth-child(odd) { flex-direction: row; }
+.timeline-item:nth-child(odd) .timeline-text { text-align: right; padding-right: 2rem; }
+
+/* Парні картки (Відео зліва, Текст справа) */
+.timeline-item:nth-child(even) { flex-direction: row-reverse; }
+.timeline-item:nth-child(even) .timeline-text { text-align: left; padding-left: 2rem; }
+
+/* --- ТЕКСТ ТА ВІДЕО --- */
+.timeline-date {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background-color: rgba(139, 92, 246, 0.1);
+  color: var(--accent-purple);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.timeline-text h3 { margin-bottom: 1rem; font-size: 1.4rem; }
+.timeline-text p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+
+.video-container {
+  position: relative; width: 100%; padding-bottom: 56.25%; height: 0;
+  border-radius: 8px; overflow: hidden; border: 1px solid rgba(226, 226, 229, 0.1);
+}
+.video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+/* Дії з відео */
+.video-actions { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem; }
+.timeline-item:nth-child(even) .video-actions { justify-content: flex-start; }
+.action-btn { display: flex; align-items: center; gap: 0.5rem; background: transparent; color: var(--text-muted); border: 1px solid rgba(226, 226, 229, 0.1); padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; transition: all 0.3s; font-size: 0.9rem; }
+.action-btn:hover { color: var(--text-main); border-color: rgba(226, 226, 229, 0.3); background: rgba(226, 226, 229, 0.05); }
+.like-btn.liked { color: #ef4444; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.1); }
+.like-btn.liked svg { fill: #ef4444; }
+
+/* --- КНОПКА НАВЕРХ --- */
+.scroll-top-btn {
+  position: fixed; bottom: 30px; right: 30px;
+  width: 50px; height: 50px;
+  background-color: var(--accent-purple); color: #fff;
+  border: none; border-radius: 50%;
+  cursor: pointer; display: flex; justify-content: center; align-items: center;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+  opacity: 0; visibility: hidden; transform: translateY(20px);
+  transition: all 0.3s ease; z-index: 1000;
+}
+.scroll-top-btn.show { opacity: 1; visibility: visible; transform: translateY(0); }
+.scroll-top-btn:hover { background-color: #7c3aed; transform: translateY(-3px) scale(1.1); }
+
+/* --- АДАПТИВНІСТЬ (МОБІЛЬНІ) --- */
+.mobile-filter-btn { display: none; }
+
+@media (max-width: 900px) {
+  /* Мобільна кнопка фільтрів - плаваюча і напівпрозора при скролі */
+  .mobile-filter-btn {
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    width: 100%; background-color: var(--bg-card); color: var(--text-main);
+    border: 1px solid rgba(226, 226, 229, 0.1); padding: 1rem; border-radius: 12px;
+    font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+  }
+  
+  /* Клас додається через JS при скролі */
+  .mobile-filter-btn.scrolled {
+    background-color: rgba(20, 20, 25, 0.7);
+    backdrop-filter: blur(8px);
+    border-color: var(--accent-purple);
+  }
+
+  .filters-panel { display: none; margin-top: 1rem; }
+  .filters-panel.show-panel { display: flex; animation: fadeIn 0.3s ease; }
+  .filters-dropdowns { flex-direction: column; }
+  
+  /* Зламуємо шаховий порядок для телефонів */
+  .timeline::after { left: 20px; transform: none; }
+  .timeline-item { flex-direction: column !important; align-items: flex-start; margin-bottom: 3rem; position: relative; }
+  .timeline-text, .timeline-content { width: 100%; text-align: left !important; padding: 0 !important; padding-left: 50px !important; }
+  .timeline-text { margin-bottom: 1rem; }
+  .timeline-dot { left: 12px; top: 0; transform: none; }
+  .video-actions { justify-content: flex-start !important; }
+}
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- ЗАГЛУШКА ДЛЯ YOUTUBE --- */
+.youtube-facade {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  cursor: pointer;
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.youtube-facade img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.youtube-facade:hover img {
+  opacity: 1;
+}
+
+/* Кнопка Play як на YouTube */
+.yt-play-btn {
+  position: absolute;
+  width: 68px; height: 48px;
+  background-color: rgba(33, 33, 33, 0.8);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.yt-play-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-40%, -50%);
+  border-style: solid;
+  border-width: 10px 0 10px 20px;
+  border-color: transparent transparent transparent #fff;
+}
+
+.youtube-facade:hover .yt-play-btn {
+  background-color: #ff0000; /* Червоний колір при наведенні */
+}

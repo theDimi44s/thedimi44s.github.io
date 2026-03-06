@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Музика | Yevtushenko.log</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <link rel="stylesheet" href="./src/music.css"> 
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Головна -->
+    <header class="hero music-hero" style="margin-top: 5vh; margin-bottom: 3rem; display: block;">
+      <a href="/" class="btn secondary" style="display: inline-block; margin-bottom: 2rem;">← На головну</a>
+      <h1>Моя <span class="highlight red-text">Музика</span></h1>
+      <p class="subtitle">Від дитячих уроків вокалу до музичної теорії та гри на музичних інструментах</p>
+    </header>
+
+    <!-- Останні записи моєї музики -->
+    <section class="media-section">
+      <h2>Останні <span class="highlight red-text">Записи</span></h2>
+      <p style="color: var(--text-muted); margin-bottom: 2rem;">Тут з'являться мої перші демо-записи 
+        та відео з майбутнього YouTube-каналу.</p>
+    <!-- Поки що це заглушка, яка буде замінена на реальний контент -->
+      <div class="media-placeholder">
+        <div class="placeholder-content">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="rgba(192, 75, 75, 0.5)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+          <p>Контент у процесі створення...</p>
+        </div>
+      </div>
+    </section>
+    <!-- Прогрес у вивченні пісень та муз.інструментів -->
+    <section class="progress-section">
+      <h2>Що я зараз <span class="highlight red-text">Вивчаю</span></h2>
+      <p style="color: var(--text-muted); margin-bottom: 2rem;">Мій поточний репертуар та етап розбору пісень.</p>
+      
+      <div class="track-list">
+        
+        <div class="track-item">
+          
+          <div class="track-header">
+            <div class="track-info">
+              <h4>Люди, як кораблі</h4>
+              <span class="track-meta">Скрябін • Укулеле (Перебір)</span>
+            </div>
+           <!-- Прогрес у вивченні пісні у вигляді прогрес-бару та відсотка --> 
+            <div class="track-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 55%;"></div> 
+              </div>
+              <span class="progress-text">55%</span>
+            </div>
+          <!-- Кнопки для прослуховування демо та перегляду тексту з акордами -->  
+            <div class="track-actions">
+              <button class="track-btn play-btn" title="Слухати демо">▶</button>
+              <button class="track-btn text-btn" title="Текст та акорди">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+              </button>
+            </div>
+          </div>
+          <!-- Аудіо плеєр, який буде показаний при натисканні на кнопку "Слухати демо" -->
+          <div class="player-dropdown">
+            <div class="player-wrapper">
+              <audio controls class="custom-audio" controlsList="nodownload">
+                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                Ваш браузер не підтримує аудіо елемент.
+              </audio>
+            </div>
+          </div>
+<!-- Текст пісні з акордами, який буде показаний при натисканні на кнопку -->          
+          <div class="lyrics-data" hidden>
+/ Intro / 
+'Gm' 'Cm' 'F'
+\ Verse 1 \
+[Gm]Я не твій [Cm]брат, ти не [F]сестра моя,
+Ніколи не розказуй мені - [Gm]хто
+І в [Cm]чому я винен на [F]нашій зем[F]лі,
+Люди, як кораблі...[Gm]
+
+Кожен плив[Cm]е, поки хв[F]иля несе 
+І поки глибока вода а-а[Gm]
+Глибока і [Cm]темна до [F]самого дна. 
+До самого, самого д[Gm]на.
+
+/ Instrumental /
+'Cm' 'F' 'Gm' 'Cm' 'F' 
+
+\ Verse 2 \
+[Gm]На глиби[Cm]ні, зустрі[F]чаються всі,
+Так ніби в морі місця н[Gm]ема а-а 
+І т[Gm]руться бортами, аж [F]стогне земля 
+Від зависті, підлості й з[Gm]ла.
+
+Хтось недо[Cm]плив, бо йо[F]му помогли
+Набрати повні трюми во[Gm]ди, 
+Пос[Cm]тати героями [F]тої війни. 
+Дуже стати хотіли во[Dm]ни.
+
+/ Chorus /
+А до берега[Gm] тихо хвилі несу[Cm]ть
+Поранені [F]душі живих кораб[Dm]лів.
+А від берега зно[Gm]в у море ідут[Cm]ь
+Ті, хто віру і [F]правду знати хо[Gm]тів. [Cm]       [F]
+
+\ Verse 3 \
+[Gm]Наш оке[Cm]ан, знає [F]більше ніж ми,
+Секрети всі у нього на д[Gm]ні, 
+А м[Cm]и ходим зверху - ве[F]ликі й малі 
+Люди, як кораб[Gm]лі.
+
+Гордо пли[Cm]вем, і не [F]вірить ніхто,
+Що ним зацікавилося з[Gm]ло.
+І се[Cm]ред вітрів ми не [F]чуєм щурів, 
+Які прогризають нам д[Dm]но.
+
+/ Chorus /
+А до берега[Gm] тихо хвилі несу[Cm]ть
+Поранені [F]душі живих кораб[Dm]лів.
+А від берега зно[Gm]в у море ідут[Cm]ь
+Ті, хто віру і [F]правду знати хо[Dm]тів.
+
+А до берега[Gm] тихо хвилі несу[Cm]ть
+Поранені [F]душі живих кораб[Dm]лів.
+А від берега зно[Gm]в у море ідут[Cm]ь
+Ті, хто віру і [F]правду знати хо[Gm]тів.
+          </div>
+        </div>
+
+    <!-- Другий трек -->
+        <div class="track-item">
+          
+          <div class="track-header">
+            <div class="track-info">
+              <h4>Killer Queen</h4>
+              <span class="track-meta">Queen • Укулеле</span>
+            </div>
+            
+            <div class="track-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 30%;"></div> 
+              </div>
+              <span class="progress-text">30%</span>
+            </div>
+            
+            <div class="track-actions">
+              <button class="track-btn play-btn" title="Слухати демо">▶</button>
+              <button class="track-btn text-btn" title="Текст та акорди">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+              </button>
+            </div>
+          </div>
+          
+          <div class="player-dropdown">
+            <div class="player-wrapper">
+              <audio controls class="custom-audio" controlsList="nodownload">
+                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+                Ваш браузер не підтримує аудіо елемент.
+              </audio>
+            </div>
+          </div>
+          
+          <div class="lyrics-data" hidden>
+/ Verse 1 /
+[Cm]She keeps her Moët et Chandon [Bb7]in her pretty cabinet
+[Cm]"Let them eat cake," [Bb7]she says, just like [Eb]Marie Antoinette
+[Eb]A built-in [Gm]remedy for [Eb7]Khrushchev and [Ab]Kennedy
+[Abm]At anytime [Eb]an invit[Ab]ation you can't [Bb7]decline
+
+\ Pre-Chorus \
+[G7]Caviar and [Cm]cigarettes, [Bb]well versed [Eb]in etiquette
+[D7]Extraordin[Gm]arily nice[F7]
+
+/ Chorus /
+[A#]She's a Killer [Dm]Queen, gun[Gm]powder, gela[Dm]tine
+[Gm]Dynamite with a [A7]laser [Dm]beam
+[G7]Guaran[F]teed [G7]to [C]blow [A#]your mind
+[A]Anytime [Dm]      [G7]       [C]       [A#]
+
+/ Verse 2 /
+[Cm]Recommended at the price, in[A#7]satiable an appetite
+[Cm]Wanna [A#7]try? [Eb]
+[Eb]To avoid compli[Gm]cations, she [Eb7]never kept the same ad[Ab]dress
+[Abm]In conver[Eb]sation she [Ab]spoke just like a baro[A#7]ness
+
+\ Pre-Chorus \
+[G7]Met a man from [Cm]China, went [A#]down to Geisha [Eb]Minah
+[D7]Then again inci[Gm]dentally, if [F7]you're that way inclined
+
+/ Chorus /
+[A#]She's a Killer [Dm]Queen, gun[Gm]powder, gela[Dm]tine
+[Gm]Dynamite with a [A7]laser [Dm]beam
+[G7]Guaran[F]teed [G7]to  [C]blow [A#]your mind
+[A]Anytime
+
+\ Solo \ Verse 3 \
+[Cm]Drop of a hat, she's as [A#7]willing as, playful as a pussycat
+[Cm]Then momen[A#7]tarily out of action, [Eb]temporarily out of gas
+[Eb]To abso[Gm]lutely [Eb7]drive you [Ab]wild, wild...
+[Abm]She's [Eb]all out to [Ab]get [A#7]you
+
+/ Chorus /
+[A#]She's a Killer [Dm]Queen, gun[Gm]powder, gela[Dm]tine
+[Gm]Dynamite with a [A7]laser [Dm]beam
+[G7]Guaran[F]teed [G7]to  [C]blow [A#]your mind
+[A]Anytime
+          </div>
+        </div>
+        </div> 
+    </section> 
+
+    <!-- Мій муз.інструментарій та вокал -->
+    <section class="instruments-section">
+      <h2>Мій <span class="highlight red-text">інструментарій</span></h2>
+    <!-- Сітка з картками інструментів та вокалу -->  
+      <div class="instruments-grid">
+        <div class="instrument-card active-instrument">
+          <div class="inst-icon">🎵</div>
+          <h3>Укулеле Enya EUS-25D Bl</h3>
+          <span class="inst-status">В процесі освоєння</span>
+          <p>Мій основний інструмент на даний момент. Вивчаю акорди, перебори та інструментальні кавери. Неймовірне звучання концертного корпусу.</p>
+        </div>
+
+        <div class="instrument-card active-instrument">
+          <div class="inst-icon">🎤</div>
+          <h3>Вокал</h3>
+          <span class="inst-status">Повернення до витоків</span>
+          <p>Маю базу з дитинства. Зараз потроху повертаюся до співу, щоб поєднувати його з грою на інструментах.</p>
+        </div>
+
+        <div class="instrument-card active-instrument">
+          <div class="inst-icon">🎼</div>
+          <h3>Музична теорія</h3>
+          <span class="inst-status">Фундамент</span>
+          <p>Вивчаю гами, інтервали та побудову акордів, щоб грати свідомо, а не просто завчати таби.</p>
+        </div>
+    <!-- У планах розширити інструментарій іншими струнними інструментами, окремий клас future-instrument-->
+        <div class="instrument-card future-instrument">
+          <div class="inst-icon">❓</div>
+          <h3>Баритон / Гіталеле / Бас</h3>
+          <span class="inst-status">У планах</span>
+          <p>Планую розширювати діапазон звучання іншими струнними інструментами.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Модалка для тексту пісні з акордами -->
+  </div> <div class="lyrics-modal" id="lyricsModal">
+    <div class="modal-content">
+      <button class="close-modal" id="closeModal">&times;</button>
+      <h3 id="modalTitle" class="highlight red-text">Назва пісні</h3>
+      <div class="modal-meta" id="modalMeta">Виконавець • Інструмент</div>
+      <div class="modal-lyrics-text" id="modalLyrics">
+        Тут буде текст пісні...
+      </div>
+    </div>
+  </div>
+
+  <script src="./src/music.js"></script>
+
+</body>
+</html>

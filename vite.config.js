@@ -6,6 +6,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
+        travel: resolve(__dirname, 'travel.html'), //Сторінка про подорожі
       }
     }
   }

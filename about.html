@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Про мене | Yevtushenko.log</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <link rel="stylesheet" href="./src/about.css"> </head>
+<body>
+
+  <!-- Навігація -->
+  <div class="container">
+    <header class="hero" style="margin-top: 5vh; margin-bottom: 3rem; display: block;">
+      <a href="/" class="btn secondary" style="display: inline-block; margin-bottom: 2rem;">← На головну</a>
+      <h1>Хто такий <span class="highlight">Dimi44s</span>?</h1>
+    </header>
+
+    <!-- Біографія -->
+    <section class="bio-section">
+      <div class="bio-text">
+        <p>Привіт! Я — спеціаліст із понад п'ятирічним досвідом у сфері <b>Technical Support</b>.</p>
+        <p>Я звик розбиратися в складних системах, шукати неочевидні баги та перекладати технічну мову на людську. 
+            Віддаю перевагу віддаленій роботі та чітко налагодженим процесам.</p>
+      </div>
+    </section>
+
+    <!-- Скіли та досвід -->
+    <section class="skills-section">
+      <h2>Мої <span class="highlight">скіли</span></h2>
+      
+    <!-- Вкладки для вибору між Tech Support та Game QA -->  
+      <div class="skills-tabs">
+        <button class="tab-btn active" data-target="support">Tech Support (L2/L3)</button>
+        <button class="tab-btn" data-target="qa">Game QA</button>
+      </div>
+    
+    <!-- Контент для кожної вкладки, тег active - активна вкладка при відкритті сторінки -->
+      <div class="skills-content active" id="support">
+        <div class="skills-grid">
+          <div class="skill-card">
+            <h4>Troubleshooting</h4>
+            <p>Діагностика та вирішення складних технічних проблем користувачів.</p>
+          </div>
+          <div class="skill-card">
+            <h4>Комунікація</h4>
+            <p>Вміння заспокоїти клієнта та надати чіткі, покрокові інструкції.</p>
+          </div>
+          <div class="skill-card">
+            <h4>Адміністрування</h4>
+            <p>Робота з базами даних, SQL, логами та внутрішніми системами.</p>
+          </div>
+        </div>
+      </div>
+    <!-- Контент для вкладки Game QA -->
+      <div class="skills-content" id="qa">
+        <div class="skills-grid">
+          <div class="skill-card">
+            <h4>Bug Hunting</h4>
+            <p>Пошук, локалізація та відтворення багів. Розуміння життєвого циклу дефекту.</p>
+          </div>
+          <div class="skill-card">
+            <h4>Testing Types</h4>
+            <p>Функціональне, регресійне та дослідницьке тестування.</p>
+          </div>
+          <div class="skill-card">
+            <h4>Геймерський бекграунд</h4>
+            <p>Розуміння ігрових механік Маю досвід та роботу з іграми на різних платформах: 
+              PC, PS, Nintendo та Steam Deck (Arch Linux).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <!-- Досвід роботи -->  
+    <section class="experience-section">
+      <h2>Мій <span class="highlight">Досвід</span></h2>
+  <!-- Хронологічна шкала досвіду роботи -->    
+      <div class="experience-timeline">
+  <!-- 1 блок досвіду роботи -->      
+        <div class="exp-item">
+          <div class="exp-dot"></div>
+          <span class="exp-date">Березень 2021 — Теперішній час</span>
+          <h3 class="exp-title">Technical Support Specialist (L2/L3)</h3>
+          <h4 class="exp-company">ТОВ Торгсофт</h4>
+          <p class="exp-desc">
+            Надання послуг з технічної підтримки та QA. 
+            Гнучкий підхід до вирішення технічних завдань клієнтів, налаштування систем та пошук дефектів у ПЗ Торгсофт.
+            Робота з обладнанням та підключення до Windows / macOS / iOS / Android 
+            Робота з базами даних SQL Server
+            Налаштування локальних мереж та серверів
+            Глибока діагностика та вирішення технічних проблем програмного забезпечення. 
+            Робота з базами даних, аналіз логів, надання покрокових консультацій користувачам. 
+            Активна взаємодія з командою розробки для локалізації та виправлення складних багів.
+          </p>
+        </div>
+  <!-- 2 блок досвіду роботи і т.д. -->
+        <div class="exp-item">
+          <div class="exp-dot"></div>
+          <span class="exp-date">Жовтень 2019 — Січень 2021</span>
+          <h3 class="exp-title">Кредитний менеджер</h3>
+          <h4 class="exp-company">Lime Cash / Lime Capital</h4>
+          <p class="exp-desc">
+            Працював на посаді кредитного менеджера. Було цікаво отримати досвід "зсередини" фінансової компанії, 
+            розуміти, як працюють кредитні продукти 
+            Проводив консультацію з фінансових питань, допомога клієнтам у використанні платформи 1С
+          </p>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-dot"></div>
+          <span class="exp-date">Рік — Рік</span>
+          <h3 class="exp-title">Попередня посада</h3>
+          <h4 class="exp-company">Назва компанії</h4>
+          <p class="exp-desc">
+            Опис тут.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <script src="./src/about.js"></script>
+</body>
+</html>

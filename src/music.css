@@ -1,0 +1,401 @@
+/* --- СТИЛІ МУЗИЧНОЇ СТОРІНКИ --- */
+
+.red-text {
+  color: #c04b4b !important;
+}
+
+/* Сітка інструментів */
+.instruments-section {
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+
+.instruments-section h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.instruments-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .instruments-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Картка інструменту */
+.instrument-card {
+  background-color: var(--bg-card);
+  border: 1px solid rgba(226, 226, 229, 0.05);
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.instrument-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(192, 75, 75, 0.3);
+}
+
+.inst-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+.instrument-card h3 {
+  font-size: 1.3rem;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.inst-status {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+
+.active-instrument .inst-status {
+  background-color: rgba(192, 75, 75, 0.1);
+  color: #c04b4b;
+}
+
+.future-instrument {
+  border: 1px dashed rgba(226, 226, 229, 0.2);
+  background-color: transparent;
+  opacity: 0.7;
+}
+
+.future-instrument .inst-status {
+  background-color: rgba(226, 226, 229, 0.1);
+  color: var(--text-muted);
+}
+
+.instrument-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Плейсхолдер для медіа */
+.media-section {
+  margin-bottom: 2rem;
+}
+
+.media-placeholder {
+  width: 100%;
+  height: 250px;
+  background-color: var(--bg-card);
+  border: 2px dashed rgba(192, 75, 75, 0.2);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder-content {
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.placeholder-content svg {
+  margin-bottom: 1rem;
+}
+
+/* --- МОБІЛЬНИЙ СЛАЙДЕР ДЛЯ АРСЕНАЛУ --- */
+@media (max-width: 767px) {
+  .instruments-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1.5rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 1rem;
+  }
+  
+  .instruments-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .instrument-card {
+    flex: 0 0 85%; 
+    scroll-snap-align: center;
+  }
+}
+
+/* --- СЕКЦІЯ ПРОГРЕСУ ВИВЧЕННЯ --- */
+.progress-section {
+  margin-bottom: 2rem;
+}
+
+.track-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.track-item {
+  flex-direction: column;
+  align-items: stretch;
+  background-color: var(--bg-card);
+  border: 1px solid rgba(226, 226, 229, 0.05);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.track-item:hover {
+  transform: translateX(4px);
+  background-color: rgba(30, 30, 35, 0.8);
+}
+
+.track-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+}
+
+.track-info {
+  flex: 1 1 200px;
+}
+
+.track-info h4 {
+  font-size: 1.1rem;
+  color: var(--text-main);
+  margin-bottom: 0.2rem;
+}
+
+.track-meta {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.track-progress {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1 1 150px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #c04b4b;
+  border-radius: 4px;
+  transition: width 0.5s ease-in-out;
+}
+
+.progress-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+  min-width: 40px;
+}
+
+.track-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.track-btn {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.track-btn:hover {
+  background-color: #c04b4b;
+  border-color: #c04b4b;
+  color: white;
+}
+
+.play-btn {
+  font-size: 0.9rem;
+  padding-left: 3px;
+}
+
+.player-dropdown {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, margin-top 0.4s ease, opacity 0.3s ease;
+}
+
+.track-item.playing .player-dropdown {
+  max-height: 100px;
+  margin-top: 1.5rem;
+  opacity: 1;
+}
+
+.track-item.playing .play-btn {
+  background-color: #c04b4b;
+  border-color: #c04b4b;
+  color: white;
+}
+
+.player-wrapper {
+  background-color: transparent;
+  padding: 0.5rem 1rem;
+}
+
+.custom-audio {
+  width: 100%;
+  height: 50px;
+  outline: none;
+}
+
+/* --- МОДАЛЬНЕ ВІКНО --- */
+.lyrics-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 10, 12, 0.85);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.lyrics-modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background-color: var(--bg-card);
+  border: 1px solid rgba(192, 75, 75, 0.2);
+  border-radius: 16px;
+  padding: 2.5rem;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+}
+
+.lyrics-modal.show .modal-content {
+  transform: translateY(0);
+}
+
+.close-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close-modal:hover {
+  color: #c04b4b;
+}
+
+.modal-content h3 {
+  font-size: 1.8rem;
+  margin-bottom: 0.2rem;
+}
+
+.modal-meta {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* --- МАГІЯ АКОРДІВ --- */
+.modal-lyrics-text {
+  font-size: 1rem;
+  line-height: 2.5; 
+  color: var(--text-main);
+  white-space: pre-wrap; 
+  font-family: inherit;
+  margin-top: 1.5rem; 
+}
+
+/* Акорд має нульову висоту і ширину, щоб не розривати букви */
+.chord {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+  line-height: 0;
+  vertical-align: baseline; /* Жорстко прив'язуємо до нижньої лінії тексту */
+  overflow: visible;
+}
+
+.chord::before {
+  content: attr(data-chord);
+  position: absolute;
+  bottom: 1.5em; /* Піднімаємо червоний текст на стабільну висоту над словом */
+  left: 0;
+  color: #c04b4b;
+  font-weight: bold;
+  font-size: 0.95em;
+  white-space: nowrap;
+}
+
+/* --- АДАПТИВНІСТЬ ДЛЯ МОБІЛЬНИХ ПРИСТРОЇВ --- */
+@media (max-width: 767px) {
+  .modal-content {
+    width: 95%; 
+    padding: 1.5rem 1rem; 
+  }
+
+  .modal-lyrics-text {
+    font-size: 0.85rem; 
+    line-height: 2.6; 
+  }
+
+  .chord::before {
+    font-size: 0.9em; 
+    bottom: 1.6em; /* Трохи піднімаємо для меншого шрифту */
+  }
+}
