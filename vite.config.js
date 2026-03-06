@@ -7,6 +7,9 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         travel: resolve(__dirname, 'travel.html'), //Сторінка про подорожі
+        shop: resolve(__dirname, 'shop.html'), //Сторінка про магазин
+        about: resolve(__dirname, 'about.html'), //Сторінка про мене
+        music: resolve(__dirname, 'music.html'), //Сторінка про музику
       }
     }
   }
