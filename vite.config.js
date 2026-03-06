@@ -10,6 +10,8 @@ export default defineConfig({
         shop: resolve(__dirname, 'shop.html'), //Сторінка про магазин
         about: resolve(__dirname, 'about.html'), //Сторінка про мене
         music: resolve(__dirname, 'music.html'), //Сторінка про музику
+        projects: resolve(__dirname, 'projects.html'), //Сторінка про проекти
+        blog: resolve(__dirname, 'blog.html'), //Сторінка про мої думки, блог
       }
     }
   }

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Мої проєкти | Yevtushenko.log</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <link rel="stylesheet" href="./src/projects.css"> 
+</head>
+<body>
+
+    <!-- Основний блок -->
+  <div class="container">
+    
+    <!-- Основна інфо секція -->
+    <header class="hero projects-hero" style="margin-top: 5vh; margin-bottom: 3rem; display: block;">
+      <a href="/" class="btn secondary" style="display: inline-block; margin-bottom: 2rem;">← На головну</a>
+      <h1>Мої <span class="highlight">Проєкти</span></h1>
+      <p class="subtitle">Практичний досвід у Tech Support, QA та Web-розробці. 
+        Від вирішення клієнтських проблем до написання коду.</p>
+    </header>
+
+    <!-- Секція з проєктами -->
+    <section class="projects-grid">
+     
+    <!-- Проєкт 1 -->
+      <div class="project-card">
+        <div class="project-header">
+          <h3 class="project-title">Персональне Портфоліо</h3>
+          <span class="project-role">Front-end Developer / Designer</span>
+        </div>
+    
+    <!-- Теги проекту  -->
+        <div class="project-tags">
+          <span class="tag">HTML5</span>
+          <span class="tag">CSS3</span>
+          <span class="tag">JavaScript (ES6)</span>
+          <span class="tag">Vite</span>
+        </div>
+        
+    <!-- Короткий опис проекту -->
+        <div class="project-short-desc">
+          <p>Розробка власного багатосторінкового сайту-портфоліо з нуля без 
+            використання UI-фреймворків чи конструкторів, використовуючи як власні знання так допомога ШІ.
+            Реалізована кастомна логіка модальних вікон, аудіоплеєрів та фільтрів.</p>
+        </div>
+    
+        <!-- Кнопка для показу детальної інформації -->
+        <button class="btn secondary details-btn">Детальніше</button>
+
+        <!-- Детальна інформація, яка буде показана при натисканні на "Детальніше" -->
+        <div class="hidden-project-data" hidden>
+          <p><b>Мета:</b> Створити швидкий, семантичний та стильний сайт для демонстрації 
+            своїх навичок, хобі (музика) та досвіду роботи.</p>
+          <p><b>Ключові досягнення:</b></p>
+          <ul>
+            <li>Повністю адаптивна верстка (Mobile First).</li>
+            <li>Реалізовано систему зчитування акордів з тексту пісень за допомогою JavaScript регулярних виразів.</li>
+            <li>Налаштовано збірку проєкту через <b>Vite</b> та автоматичний деплой на <b>GitHub Pages</b>.</li>
+            <li>Інтеграція Smart Checkout (генерація посилань для замовлення у Telegram).</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Проєкт 2 -->
+      <div class="project-card">
+        <div class="project-header">
+          <h3 class="project-title">Torgsoft (Облік для бізнесу)</h3>
+          <span class="project-role">Technical Support Specialist</span>
+        </div>
+        
+        <div class="project-tags">
+          <span class="tag">Tech Support</span>
+          <span class="tag">Troubleshooting</span>
+          <span class="tag">SQL / Бази даних</span>
+          <span class="tag">Networking</span>
+        </div>
+        
+        <div class="project-short-desc">
+          <p>Забезпечення технічної підтримки користувачів програмного забезпечення 
+            для автоматизації торгівлі. Діагностика багів, робота з базами даних та налаштування обладнання.</p>
+        </div>
+        
+        <button class="btn secondary details-btn">Детальніше</button>
+
+        <div class="hidden-project-data" hidden>
+          <p><b>Моя роль:</b> Вирішення складних технічних проблем клієнтів, 
+            що виникають під час використання ERP-системи Torgsoft.</p>
+          <p><b>Що я роблю:</b></p>
+          <ul>
+            <li>Локалізація та відтворення багів перед передачею їх у відділ розробки.</li>
+            <li>Робота з базами даних: написання запитів для виправлення помилок в обліку користувачів.</li>
+            <li>Налаштування торгового обладнання (сканери, ваги, принтери, термінали, тощо) та мережевої інфраструктури для клієнтів.</li>
+            <li>Консультації та навчання користувачів складним бізнес-процесам у системі.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Проєкт 3 -->
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3 class="project-title">Назва проекту</h3>
+          <span class="project-role">Роль</span>
+        </div>
+        
+        <div class="project-tags">
+          <span class="tag">Теги </span>
+          <span class="tag">Теги</span>
+          <span class="tag">Теги</span>
+          <span class="tag">Теги</span>
+        </div>
+        
+        <div class="project-short-desc">
+          <p>Короткий опис проекту</p>
+        </div>
+        
+        <button class="btn secondary details-btn">Детальніше</button>
+
+        <div class="hidden-project-data" hidden>
+          <p><b>Опис:</b> Повний опис проекту</p>
+          <p><b>Використані інструменти:</b></p>
+          <ul>
+            <li>Використання яких інструментів й для чого.</li>
+            <li>Використання яких інструментів й для чого.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Інші проекти тут -->
+
+    </section>
+
+<!-- Модальне вікно для детальної інформації про проєкт -->
+  </div> <div class="project-modal" id="projectModal">
+    <div class="project-modal-content">
+      <button class="close-project" id="closeProject">&times;</button>
+      
+      <div class="modal-header">
+        <h3 id="modalProjTitle">Назва проєкту</h3>
+        <span class="modal-role" id="modalProjRole">Роль</span>
+      </div>
+      
+      <div class="modal-tags" id="modalProjTags">
+        </div>
+      
+      <div class="modal-body" id="modalProjBody">
+        Тут буде детальний опис...
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/projects.js"></script>
+</body>
+</html>

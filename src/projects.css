@@ -1,0 +1,167 @@
+/* --- СІТКА ПРОЄКТІВ --- */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr); /* По дві картки в ряд на широких екранах */
+  }
+}
+
+/* Картка проєкту */
+.project-card {
+  background-color: var(--bg-card);
+  border: 1px solid rgba(226, 226, 229, 0.05);
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.project-header {
+  margin-bottom: 1rem;
+}
+
+.project-title {
+  font-size: 1.4rem;
+  color: var(--text-main);
+  margin-bottom: 0.3rem;
+  line-height: 1.3;
+}
+
+.project-role {
+  font-size: 0.9rem;
+  color: var(--accent-orange); /* Або можна змінити на інший акцентний колір */
+  font-weight: 600;
+}
+
+/* Теги технологій */
+.project-tags, .modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tag {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  letter-spacing: 0.02em;
+}
+
+.project-short-desc {
+  color: var(--text-muted);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+  flex-grow: 1; /* Змушує кнопку завжди бути внизу картки */
+}
+
+.details-btn {
+  width: 100%;
+  text-align: center;
+}
+
+/* --- МОДАЛЬНЕ ВІКНО ПРОЄКТУ --- */
+.project-modal {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(10, 10, 12, 0.85);
+  backdrop-filter: blur(5px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.project-modal.show {
+  opacity: 1; visibility: visible;
+}
+
+.project-modal-content {
+  background-color: var(--bg-card);
+  border: 1px solid rgba(226, 226, 229, 0.1);
+  border-radius: 16px;
+  padding: 2.5rem;
+  width: 90%; max-width: 600px;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+}
+
+.project-modal.show .project-modal-content {
+  transform: translateY(0);
+}
+
+.close-project {
+  position: absolute; top: 1rem; right: 1.5rem;
+  background: none; border: none;
+  color: var(--text-muted); font-size: 2rem; cursor: pointer;
+}
+
+.close-project:hover { color: var(--text-main); }
+
+.modal-header {
+  margin-bottom: 1rem;
+}
+
+.modal-header h3 {
+  font-size: 1.8rem;
+  color: var(--text-main);
+  margin-bottom: 0.2rem;
+}
+
+.modal-role {
+  color: var(--accent-orange);
+  font-weight: 600;
+}
+
+.modal-body {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.modal-body p {
+  margin-bottom: 1rem;
+}
+
+.modal-body b {
+  color: var(--text-main);
+}
+
+.modal-body ul {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.modal-body li {
+  margin-bottom: 0.5rem;
+}
+
+/* Адаптив модалки для телефонів */
+@media (max-width: 767px) {
+  .project-modal-content {
+    width: 95%;
+    padding: 1.5rem 1rem;
+  }
+  .modal-header h3 {
+    font-size: 1.4rem;
+  }
+}

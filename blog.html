@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Думки | Yevtushenko.log</title>
+  <link rel="stylesheet" href="./src/style.css">
+  <link rel="stylesheet" href="./src/blog.css"> 
+</head>
+<body>
+
+    <!-- Навігація -->
+  <div class="container blog-container">
+    
+    <header class="hero blog-hero" style="margin-top: 5vh; margin-bottom: 3rem; display: block;">
+      <a href="/" class="btn secondary" style="display: inline-block; margin-bottom: 2rem;">← На головну</a>
+      <h1>Мої <span class="highlight">Думки</span></h1>
+      <p class="subtitle">Нотатки про технології, геймдев, музику та життєві спостереження.</p>
+    </header>
+
+    <!-- Контрол для фільтрації та категоризації -->
+    <section class="blog-controls">
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">Всі записи</button>
+        <button class="filter-btn" data-filter="gamedev">Game QA</button>
+        <button class="filter-btn" data-filter="gaming">Геймінг</button>
+        <button class="filter-btn" data-filter="tech">Tech Support</button>
+        <button class="filter-btn" data-filter="instructions">Інструкції</button>
+        <button class="filter-btn" data-filter="music">Музика</button>
+       <!-- <button class="filter-btn" data-filter="war">Війна</button> -->
+      </div>
+    </section>
+
+    <!-- Блог-фід -->
+    <section class="blog-feed">
+
+     <!-- Cтаття №1 -->
+      <article class="blog-post" id="enya-ukulele" data-category="music">
+        <div class="post-meta">
+    <!-- Дата публікації та час читання -->
+          <time datetime="2026-03-06">21 лютого, 2026</time>
+          <span class="read-time">5 хв читання</span>
+        </div>
+    <!-- Заголовок статті -->
+        <h2 class="post-title">Enya EUS-25D Bl.</h2>
+        <div class="post-tags">
+          <span class="tag">Укулеле</span>
+          <span class="tag">Музика</span>
+        </div>
+        <p class="post-excerpt">Погравши достатньо часу на укулеле Aria, яку мені позичили, нарешті подарували мені укулеле моделі Enya EUS-25D Bl.
+            Що можу сказати ? Вона чудова!</p>
+        <button class="read-more-btn">Читати повністю →</button>
+
+        <div class="hidden-post-content" hidden>
+          <p>Я вважаю, що це ідеальний інструмент для початківця. Вона має приємний звук, 
+            зручний гриф та виглядає дуже стильно. Попередньо достатеьо часу провів вивчаючи різні моделі та бренди.
+            Наприклад Parksons UK24Z - непогане укулеле, по звуку краще ніж Aria, має класичні кольори. 
+            Так як, я вважав що кольори які відрізняються від "класики" - це просто фішка дизайну, особливо вичурно
+            яскраві кольори. 
+             <img src="./public/BlogImg/me_uke.jpeg" alt="Я з укулеле на фоні імпровізованих пальм">
+          <p class="article-image-caption">Гавайський мотив на фоні імпровізованих пальм</p>
+            Але коли мені порекомендували цю модель, а потім я побачив її в музичному магизині, як
+            то кажуть - "в живу".. Це щось, колір спокійний у палітрі дерева, але при цьому він має глибину 
+            і грає на світлі. Гриф тримати - одне задоволення, він заокруглений і дуже зручний для моїх рук. 
+            Звук - це окрема історія, він теплий, насичений і має приємну резонансність.
+          </p>
+        </div>
+      </article>
+
+        
+    <!-- Cтаття №1 -->
+      <article class="blog-post" data-category="gamedev">
+        <div class="post-meta">
+    <!-- Дата публікації та час читання -->
+          <time datetime="2026-03-06">11 лютого, 2026</time>
+          <span class="read-time">5 хв читання</span>
+        </div>
+    <!-- Заголовок статті -->
+        <h2 class="post-title">Чому я вирішив перейти в Game QA</h2>
+        <div class="post-tags">
+          <span class="tag">Game QA</span>
+          <span class="tag">Кар'єра</span>
+        </div>
+        <p class="post-excerpt">Після п'яти років у технічній підтримці я зрозумів, 
+            що мій досвід пошуку неочевидних багів та любов до ігор можна спробувати об'єднати у щось більше...</p>
+        <button class="read-more-btn">Читати повністю →</button>
+
+        <div class="hidden-post-content" hidden>
+          <p>Робота в технічній підтримці L2/L3 навчила мене головному: користувачі можуть 
+            зламати систему способами, які розробникам навіть не снилися. Коли ти роками шукаєш 
+            причину, чому у клієнта не сходиться звіт у базі даних, ти мимоволі стаєш тестувальником.</p>
+          <p>Я граю все своє життя у різні категорії ігор. Я бачу, як розвивається індустрія, і часто ловлю себе 
+            на думці, що аналізую баги в іграх замість того, щоб просто грати. Перехід у Game QA для мене — 
+            це логічний крок. Це можливість застосувати мій досвід траблшутингу там, де створюються світи.</p>
+          <h3>Що я роблю зараз для цього?</h3>
+          <ul>
+            <li>Тестую програмне забезпечення складної бухгалтерської прогарами</li>
+            <li>Розбираюся з Jira та методологіями розробки.</li>
+            <li>Пишу баг-репорти на власні проекти.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="blog-post" data-category="gaming">
+        <div class="post-meta">
+          <time datetime="2026-02-20">3 Лютого, 2026</time>
+          <span class="read-time">6 хв читання</span>
+        </div>
+        <h2 class="post-title">Steam Deck: ідеальна консоль для технаря?</h2>
+        <div class="post-tags">
+          <span class="tag">Геймінг</span>
+          <span class="tag">Залізо</span>
+        </div>
+        <p class="post-excerpt">Відколи у мене з'явився Steam Deck, мій підхід до 
+            ігор змінився. Це не просто портативна консоль, це повноцінний Linux-ПК у кишені...</p>
+        <button class="read-more-btn">Читати повністю →</button>
+
+        <div class="hidden-post-content" hidden>
+          <p>Я завжди був прихильником стаціонарного геймінгу. Але Steam Deck змінив 
+            правила гри. Відкритість системи на базі Arch Linux дозволяє робити з нею неймовірні речі.</p>
+    <!-- Вставка зображення виглядає так, плюс підключаємо стилі -->
+            <img src="./public/BlogImg/me_std.jpeg" alt="Грай де завгодно! Наприклад неподалік стадіону">
+          <p class="article-image-caption">Грай де завгодно! Наприклад неподалік стадіону</p>
+          <p>Для мене, як людини з технічним бекграундом, можливість зайти в режим 
+            робочого столу, підправити конфіги або встановити сторонні лаунчери (через Heroic) 
+            приносить не менше задоволення, ніж самі ігри. Це той випадок, коли пристрій ідеально балансує 
+            між "працює з коробки" та "можна зламати і перезібрати".</p>
+          <p>Особливо круто проходити на ньому інді-тайтли або перепроходити класику, лежачи на дивані. 
+            А от для важких AAA-проєктів все ж краще підходить PS5.</p>
+            Мінуси звісно очевидні - якщо батарея Вашої консолі вже не витягує більше години - це проблема. 
+            Звісно не забуваємо про павербанк, який збільшує нашу  вагу..
+            Також у ясний день все виглядатиме так
+             <img src="./public/BlogImg/std_day.jpeg" alt="Грай де завгодно! Наприклад неподалік стадіону">
+          <p class="article-image-caption">Максимальна яркість не рятує</p>
+            Звісно, хто планує його використовувати на вулиці, має бути до цього готовим. 
+            Ніхто не відміняв можливість грати на лавочці десь у тіні, де грати стає набагато зручніше.
+        </p>
+        </div>
+      </article>
+
+      <article class="blog-post" data-category="tech">
+        <div class="post-meta">
+          <time datetime="2026-01-15">15 Січня, 2026</time>
+          <span class="read-time">4 хв читання</span>
+        </div>
+        <h2 class="post-title">Як техпідтримка вчить терпінню (і SQL)</h2>
+        <div class="post-tags">
+          <span class="tag">Tech Support</span>
+          <span class="tag">Досвід</span>
+        </div>
+        <p class="post-excerpt">Технічна підтримка — це не лише про те, як перезавантажити роутер. Це про вміння перекладати з "людської" мови на мову баз даних...</p>
+        <button class="read-more-btn">Читати повністю →</button>
+
+        <div class="hidden-post-content" hidden>
+          <p>Багато хто недооцінює роль Support Specialist. На рівні L2/L3 ти стаєш мостом між користувачем, 
+            у якого "все зламалося", і розробником, якому потрібні чіткі кроки для відтворення (STR).</p>
+          <p>Моя робота з обліковими системами навчила мене тому, що 90% проблем криються в базі даних. 
+            Уміння швидко написати правильний `SELECT` запит, знайти загублену транзакцію чи виправити 
+            пошкоджені зв'язки між таблицями економить години роботи всій команді.</p>
+          <blockquote>"Найкращий баг-репорт той, який супроводжується логами і дампами бази."</blockquote>
+          <p>Цей досвід неймовірно загартовує нерви і вчить системному мисленню.</p>
+        </div>
+      </article>
+
+  <article class="blog-post" id="aria-ukulele" data-category="music">
+        <div class="post-meta">
+          <time datetime="2026-01-15">3 Жовтня, 2025</time>
+          <span class="read-time">8 хв читання</span>
+        </div>
+        <h2 class="post-title">Укулеле? Що? Та це ж не гітара!</h2>
+        <div class="post-tags">
+          <span class="tag">Укулеле</span>
+          <span class="tag">Музика</span>
+        </div>
+        <p class="post-excerpt">Укулеле — це невеличкий інструмент, який може викликати захоплення у всіх, 
+            хто пробує грати на ньому. Але що таке укулеле насправді?</p>
+        <button class="read-more-btn">Читати повністю →</button>
+
+        <div class="hidden-post-content" hidden>
+            <p>Почнемо зі статті великої <s>колись</s> Wikipedia.
+            Укулеле - це чотирьохструнний щипковий музичний інструмент, гавайська різновидність гітари, 
+            створена на основі португальського мачете. З'явившись на Гаваях у XIX столітті, 
+            інструмент здобув світову популярність завдяки компактності та яскравому звучанню.</p>
+            
+            <p>Вибачте, за зайву нотацію, але потрібно знати хоча б БАЗУ.
+            Взявши до рук укулеле, я був здивований тим, наскільки вона відрізняється від гітари. Коли в руки береш
+            гітару, ти відразу відчуваєш її вагу, розмір і глибину звуку. Укулеле ж - це як маленький друг, який
+            завжди поруч і готовий до гри. 
+               <img src="./public/BlogImg/aria_uke.png" alt="Граю The Last of Us theme на укулеле Aria ACU-A1">
+          <p class="article-image-caption">Граю The Last of Us theme на укулеле Aria ACU-A1</p>
+            Вона легка, компактна і має свій унікальний тембр, який не можна
+            сплутати ні з чим іншим. Це не просто "маленька гітара", це інструмент зі своїм характером і душею.</p>
+            </p>
+
+            <p>Спочатку я чисто грався, перебирав струни, намагаючись зрозуміти, як вона звучить. Потім спробував
+            по табулатурі зіграти кілька простих мелодій, наприклад тему з мультсеріалу Губка Боб ..
+            Потім спробував зіграти ще з декількох мультфільмів й закинув її.</p>
+
+            <p>Через деякий тривалий час, коли я завершував проходження The Last of Us Part Two, мені захотілось все ж
+            таки спробувати зіграти щось серйозніше, розібратись детальніше. Спробував зіграти один раз, два три...
+            І в результаті, я не міг відірватись від інструменту. 
+            <img src="./public/BlogImg/lou_uke.png" alt="THE LAST OF US THEME - (Easy Ukulele Fingerpicking Tutorial)">
+          <p class="article-image-caption">Основна тема гри The Last of Us на укулеле by The Ukulele Teacher
+            Погравшись з нотами, я зрозумів, що потрібно вивчати аккорди. вивчив основні аккорди C, G, Am, F - 
+            дуже просто затискаються, звучать приємно. І поступово, по-троху це все вилилось у велике хоббі.
+            </p>
+            <img src="https://guitarlavka.ru/assets/images/blog/7shagov/2.jpg" alt="Базові акорди на укулеле">
+                <p class="article-image-caption">Базові акорди на укулеле</p>
+        </div>
+      </article>
+
+
+    </section>
+  </div>
+
+  <div class="article-modal" id="articleModal">
+    <div class="article-modal-content">
+      <button class="close-article" id="closeArticle">&times;</button>
+      
+      <div class="article-header">
+        <div class="post-meta" id="modalArticleMeta">
+          </div>
+        <h2 id="modalArticleTitle">Назва статті</h2>
+      </div>
+      
+      <div class="article-body" id="modalArticleBody">
+        </div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/blog.js"></script>
+</body>
+</html>
