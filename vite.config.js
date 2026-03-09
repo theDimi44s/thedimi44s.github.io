@@ -12,6 +12,7 @@ export default defineConfig({
         music: resolve(__dirname, 'music.html'), //Сторінка про музику
         projects: resolve(__dirname, 'projects.html'), //Сторінка про проекти
         blog: resolve(__dirname, 'blog.html'), //Сторінка про мої думки, блог
+        chords: resolve(__dirname, 'chords.html') //Сторінка з акордами для гітари
       }
     }
   }
