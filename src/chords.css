@@ -211,7 +211,6 @@
   flex-wrap: wrap;
   justify-content: center;
   overflow: hidden; 
-  background: rgba(0, 0, 0, 0.3);
   max-width: 100%;
 }
 

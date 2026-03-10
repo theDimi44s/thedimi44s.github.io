@@ -382,6 +382,72 @@
   white-space: nowrap;
 }
 
+/* Банер на сторінці музика */
+.banner {
+    background-image: url('https://www.kissfm.ua/static/img/content/userfiles/images/jefferson-santos-fCEJGBzAkrU-unsplash.jpg'); /* Укажите путь к изображению */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 200px; /* Высота баннера */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px; /* Скругление углов */
+    margin-bottom: 3rem;
+}
+
+.banner-link {
+    display: inline-block;
+    padding: 5px 20px;
+    background-color: #d35b52; /* Колір кнопки */
+    color: white; /* Колір тексту */
+    text-decoration: none; /* Прибираємо підкреслення */
+    border-radius: 8px; /* Заокруглення кутів */
+    font-weight: bold;
+    transition: background-color 0.3s ease; /* Плавна зміна кольору */
+    margin: 2rem;
+}
+
+.banner-link:hover {
+    background-color: #730404; /* Колір при наведенні */
+}
+
+
+.banner-content {
+    background-color: rgba(35, 34, 34, 0.5); /* Затемнение фона текста */
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.banner h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+.banner p {
+    font-size: 18px;
+    margin: 10px 0 20px;
+}
+
+.banner-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff4500;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.banner-button:hover {
+    background-color: #ff6347; /* Эффект при наведении */
+}
+
+
 /* --- АДАПТИВНІСТЬ ДЛЯ МОБІЛЬНИХ ПРИСТРОЇВ --- */
 @media (max-width: 767px) {
   .modal-content {
@@ -398,4 +464,36 @@
     font-size: 0.9em; 
     bottom: 1.6em; /* Трохи піднімаємо для меншого шрифту */
   }
+}
+
+/* Адаптивність для смартфонів (екрани до 768px) */
+@media (max-width: 768px) {
+    .banner {
+        height: auto; /* Дозволяємо контенту розтягувати баннер */
+        padding: 40px 15px; /* Більше відступів зверху/знизу */
+        margin-bottom: 1.5rem;
+    }
+
+    .banner h1 {
+        font-size: 24px; /* Зменшуємо заголовок */
+    }
+
+    .banner-content {
+        width: 100%; /* Контент займає всю ширину */
+        padding: 15px;
+    }
+
+    .banner-link {
+        margin: 1rem 0 0 0; /* Зменшуємо відступи у посилання */
+        width: 100%; /* Кнопка на всю ширину (зручно для пальців) */
+        box-sizing: border-box; /* Щоб padding не вилазив за межі */
+        text-align: center;
+    }
+}
+
+/* Для зовсім маленьких екранів (до 480px) */
+@media (max-width: 480px) {
+    .banner h1 {
+        font-size: 20px;
+    }
 }
