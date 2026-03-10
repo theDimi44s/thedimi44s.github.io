@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
   
-  // Координати
   const stringY = [ 58.39, 52.45, 46.51, 40.96 ];
   const muteX = 26.50; 
   const fretX = [ 
@@ -10,11 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const STRINGS_COUNT = 4;
   const FRETS_COUNT = 10; 
-  
   const tuning = ['G', 'C', 'E', 'A']; 
   const chromaticScale = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
-  // Словник енгармонізмів 
   const enharmonicMap = {
     'C#': 'Db', 'Db': 'C#',
     'D#': 'Eb', 'Eb': 'D#',
@@ -26,35 +23,30 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentFingering = [0, 0, 0, 0]; 
   let currentCapo = 0; 
   let currentMode = 'library'; 
-
-  // --- ЛОГІКА ВАРІАЦІЙ ---
   let currentVariations = [];
   let currentVariationIndex = 0;
 
-  // База даних акордів (ДОДАНО ВАРІАЦІЇ ДЛЯ ТЕСТУ)
+  // ВИПРАВЛЕНА БАЗА АКОРДІВ
   const chordDatabase = {
     "0,0,0,0": { name: "C6 / Am7", note: "Відкриті струни" },
-
-    // Стандартні мажорні акорди та їх ВАРІАЦІЇ
+    
+    // Базові мажорні акорди
     "0,0,0,3": { name: "C", note: "До мажор" },
-    "5,4,3,3": { name: "C", note: "До мажор (Баре 3)" }, // Варіація C
-
     "2,2,2,0": { name: "D", note: "Ре мажор" },
-    "2,2,2,5": { name: "D", note: "Ре мажор (Мізинець 5)" }, // Варіація D
-
     "1,2,2,2": { name: "E", note: "Мі мажор" },
-
     "2,0,1,0": { name: "F", note: "Фа мажор" },
-    "5,5,5,8": { name: "F", note: "Фа мажор (Баре 5)" }, // Варіація F
-
     "0,2,3,2": { name: "G", note: "Соль мажор" },
-    "4,2,3,2": { name: "G", note: "Соль мажор (Альт.)" }, // Варіація G
-    "7,7,7,10": { name: "G", note: "Соль мажор (Баре 7)" }, // Варіація G
-
     "2,1,0,0": { name: "A", note: "Ля мажор" },
     "4,3,2,2": { name: "B", note: "Сі мажор" },
 
-    // Мінорні акорди 
+    // Базові мажорні (дієзи/бемолі) - ВИПРАВЛЕНО
+    "1,1,1,4": { name: "C# / Db", note: "До# / Реb мажор" },
+    "0,3,3,1": { name: "D# / Eb", note: "Ре# / Міb мажор" },
+    "3,1,2,1": { name: "F# / Gb", note: "Фа# / Сольb мажор" },
+    "5,3,4,3": { name: "G# / Ab", note: "Соль# / Ляb мажор" },
+    "3,2,1,1": { name: "A# / Bb", note: "Ля# / Сіb мажор" },
+
+    // Базові мінорні акорди 
     "0,3,3,3": { name: "Cm", note: "До мінор" },
     "2,2,1,0": { name: "Dm", note: "Ре мінор" },
     "0,4,3,2": { name: "Em", note: "Мі мінор" },
@@ -62,6 +54,13 @@ document.addEventListener('DOMContentLoaded', () => {
     "0,2,3,1": { name: "Gm", note: "Соль мінор" },
     "2,0,0,0": { name: "Am", note: "Ля мінор" },
     "4,2,2,2": { name: "Bm", note: "Сі мінор" },
+
+    // Базові мінорні (дієзи/бемолі) - ДОДАНО
+    "1,1,0,4": { name: "C#m / Dbm", note: "До# / Реb мінор" },
+    "3,3,2,1": { name: "D#m / Ebm", note: "Ре# / Міb мінор" },
+    "2,1,2,0": { name: "F#m / Gbm", note: "Фа# / Сольb мінор" },
+    "4,3,4,2": { name: "G#m / Abm", note: "Соль# / Ляb мінор" },
+    "3,1,1,1": { name: "A#m / Bbm", note: "Ля# / Сіb мінор" },
 
     // Септакорди 
     "0,0,0,1": { name: "C7", note: "До септакорд" },
@@ -72,27 +71,18 @@ document.addEventListener('DOMContentLoaded', () => {
     "0,1,0,0": { name: "A7", note: "Ля септакорд" },
     "4,3,2,0": { name: "B7", note: "Сі септакорд" },
 
-    "1,0,1,4": { name: "C#maj7", note: "До# мажор 7" },
+    // Інші (виправлені)
+    "1,1,1,3": { name: "C#maj7 / Dbmaj7", note: "До# мажор 7" }, // Раніше тут було помилково написано C#
     "0,0,0,2": { name: "Cmaj7", note: "До мажор 7" },
-    
     "0,0,1,3": { name: "Csus4", note: "До sus4" },
     "2,2,0,0": { name: "Asus4", note: "Ля sus4" },
 
+    // Акорди з капо
     "1,1,1,1": { name: "C#6 / A#m7", note: "До#5 / Ля#м7 (Капо 1)" },
     "2,2,2,2": { name: "D6 / Bm7", note: "Ре6 / Сім7 (Капо 2)" },
-    "3,3,3,3": { name: "D#6 / Cm7", note: "Ре#6 / Дом7 (Капо 3)" },
-    "4,4,4,4": { name: "E6 / C#m7", note: "Ми6 (Капо 4)" },
-    "5,5,5,5": { name: "F6 / Dm7", note: "Фа6 / Рем7 (Капо 5)" },
-    "6,6,6,6": { name: "F#6 / D#m7", note: "Фа#6 / Ре#7 (Капо 6)" },
-    "7,7,7,7": { name: "G6 / Em7", note: "Соль6 / Мим7 (Капо 7)" },
-    "8,8,8,8": { name: "G#6 / Fm7", note: "Соль#6 / Фам7 (Капо 8)" },
-    "9,9,9,9": { name: "A6 / F#m7", note: "Ля6 / Фа#м7 (Капо 9)" },
-    "10,10,10,10": { name: "A#6 / Gm7", note: "Ля#6 / Сольм7 (Капо 10)" },
-
     "1,2,1,1": { name: "A#7 / Bb7", note: "Ля#7 / Сіb7 (Капо 1)" },
-    "1,1,1,2": { name: "C#7", note: "До#7 (Капо 1)" }, 
-    "1,1,1,3": { name: "C#", note: "До# (Капо 1)" }, 
-    "1,1,4,4": { name: "C#5", note: "До#5 (Капо 1)" }
+    "1,1,1,2": { name: "C#7 / Db7", note: "До#7 (Капо 1)" }, 
+    "1,1,4,4": { name: "C#5 / Db5", note: "До#5 (Капо 1)" }
   };
 
   const tabInfoContent = {
@@ -105,24 +95,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const modeConfigs = {
     library: {
       qualities: [
-        { id: '', label: 'maj' }, { id: '6', label: '6' }, { id: 'maj7', label: 'maj7' }, 
-        { id: 'maj9', label: 'maj9' }, { id: 'add9', label: 'add9' }, { id: 'add11', label: 'add11' },
-        { id: 'm', label: 'min' }, { id: 'm6', label: 'm6' }, { id: 'm7', label: 'm7' }, 
-        { id: 'm9', label: 'm9' }, { id: 'madd9', label: 'madd9' }, { id: 'madd11', label: 'madd11' },
-        { id: '7', label: '7' }, { id: '9', label: '9' }, { id: '7b5', label: '7b5' }, { id: 'm7b5', label: 'm7b5' },
+        { id: '', label: 'maj', primary: true }, { id: 'm', label: 'min', primary: true }, { id: '7', label: '7', primary: true }, 
+        { id: 'm7', label: 'm7', primary: true }, { id: 'maj7', label: 'maj7', primary: true },
+        { id: '6', label: '6' }, { id: 'maj9', label: 'maj9' }, { id: 'add9', label: 'add9' }, { id: 'add11', label: 'add11' },
+        { id: 'm6', label: 'm6' }, { id: 'm9', label: 'm9' }, { id: 'madd9', label: 'madd9' }, { id: 'madd11', label: 'madd11' },
+        { id: '9', label: '9' }, { id: '7b5', label: '7b5' }, { id: 'm7b5', label: 'm7b5' },
         { id: 'sus2', label: 'sus2' }, { id: 'sus4', label: 'sus4' }, { id: '7sus2', label: '7sus2' }, { id: '7sus4', label: '7sus4' },
         { id: 'dim', label: 'dim' }, { id: 'dim7', label: 'dim7' }, { id: 'aug', label: 'aug' }
       ]
     },
     scales: {
       qualities: [
-        { id: 'maj', label: 'Мажорна' }, { id: 'min', label: 'Мінорна' },
+        { id: 'maj', label: 'Мажорна', primary: true }, { id: 'min', label: 'Мінорна', primary: true },
         { id: 'pent_maj', label: 'Пентатоніка маж.' }, { id: 'pent_min', label: 'Пентатоніка мін.' }
       ]
     },
     arpeggio: {
       qualities: [
-        { id: 'maj', label: 'Мажорне' }, { id: 'min', label: 'Мінорне' }, 
+        { id: 'maj', label: 'Мажорне', primary: true }, { id: 'min', label: 'Мінорне', primary: true }, 
         { id: '7', label: 'Домінант. 7' }, { id: 'maj7', label: 'Велике маж. 7' }
       ]
     }
@@ -139,11 +129,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const rootNotes = ['C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'F#', 'Gb', 'G', 'G#', 'Ab', 'A', 'A#', 'Bb', 'B'];
   let currentRoot = 'C';
   let currentQuality = ''; 
 
-  // DOM Елементи
   const ukuleleViewEl = document.getElementById('ukuleleView');
   const chordNameEl = document.getElementById('chordResult');
   const chordNotesEl = document.getElementById('chordNotes');
@@ -158,7 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const infoToggleBtn = document.getElementById('infoToggleBtn');
   const infoContent = document.getElementById('infoContent');
   
-  // DOM Елементи варіацій
   const variationsContainer = document.getElementById('variationsContainer');
   const prevVariationBtn = document.getElementById('prevVariationBtn');
   const nextVariationBtn = document.getElementById('nextVariationBtn');
@@ -319,7 +306,6 @@ document.addEventListener('DOMContentLoaded', () => {
     hideVariations();
   });
 
-  // --- ФУНКЦІЇ ДЛЯ ВАРІАЦІЙ ---
   function hideVariations() {
     if(variationsContainer) variationsContainer.classList.remove('visible');
     currentVariations = [];
@@ -328,15 +314,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateVariationsUI(chordName, currentKey) {
     if (!variationsContainer) return;
-    
-    // Шукаємо всі ключі в базі, які мають таку ж саму назву
     const targetNames = chordName.split('/').map(n => n.trim());
     currentVariations = [];
     
     for (const [key, data] of Object.entries(chordDatabase)) {
       if (key === "0,0,0,0") continue;
       const dbNames = data.name.split('/').map(n => n.trim());
-      // Якщо хоч одна назва збігається
       if (targetNames.some(t => dbNames.includes(t))) {
         currentVariations.push(key);
       }
@@ -394,8 +377,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (foundChord) {
       chordNameEl.innerText = foundChord.name;
       chordNotesEl.innerText = `${foundChord.note} (${soundingNotes.join(' - ')})`;
-      
-      // Викликаємо оновлення варіацій
       if (currentMode === 'library' || currentMode === 'build') {
          updateVariationsUI(foundChord.name, key);
       } else {
@@ -440,36 +421,138 @@ document.addEventListener('DOMContentLoaded', () => {
     rootContainer.innerHTML = '';
     qualityContainer.innerHTML = '';
 
-    rootNotes.forEach(root => {
-      const btn = document.createElement('button');
-      btn.className = 'builder-btn';
-      if (root === currentRoot) btn.classList.add('active');
-      btn.innerText = root.replace('#', '♯'); 
-      
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#rootNotesContainer .builder-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentRoot = root;
+    const noteGroups = [
+      { base: 'C', mods: ['#'] },
+      { base: 'D', mods: ['#', 'b'] },
+      { base: 'E', mods: ['b'] },
+      { base: 'F', mods: ['#'] },
+      { base: 'G', mods: ['#', 'b'] },
+      { base: 'A', mods: ['#', 'b'] },
+      { base: 'B', mods: ['b'] }
+    ];
+
+    noteGroups.forEach(group => {
+      const groupEl = document.createElement('div');
+      groupEl.className = 'note-group';
+
+      const mainBtn = document.createElement('button');
+      mainBtn.className = 'main-note-btn';
+      mainBtn.dataset.note = group.base;
+      mainBtn.innerText = group.base;
+
+      mainBtn.addEventListener('click', () => {
+        currentRoot = group.base;
+        updateBuilderActiveStates();
         updateSelection();
       });
-      rootContainer.appendChild(btn);
+      groupEl.appendChild(mainBtn);
+
+      if (group.mods.length > 0) {
+        const modsEl = document.createElement('div');
+        modsEl.className = 'note-modifiers';
+        const sortedMods = group.mods.sort((a,b) => a === '#' ? -1 : 1);
+
+        sortedMods.forEach(mod => {
+          const modBtn = document.createElement('button');
+          modBtn.className = 'mod-btn';
+          modBtn.dataset.note = group.base + mod;
+          modBtn.innerText = mod === '#' ? '♯' : '♭';
+
+          modBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentRoot = group.base + mod;
+            updateBuilderActiveStates();
+            updateSelection();
+          });
+          modsEl.appendChild(modBtn);
+        });
+        groupEl.appendChild(modsEl);
+      }
+      rootContainer.appendChild(groupEl);
     });
 
     const qualities = modeConfigs[currentMode].qualities;
-    qualities.forEach(q => {
+    const primaryQualities = qualities.filter(q => q.primary);
+    const extraQualities = qualities.filter(q => !q.primary);
+
+    const primaryContainer = document.createElement('div');
+    primaryContainer.className = 'primary-qualities';
+    qualityContainer.appendChild(primaryContainer);
+
+    primaryQualities.forEach(q => {
       const btn = document.createElement('button');
-      btn.className = 'builder-btn';
-      if (q.id === currentQuality) btn.classList.add('active');
+      btn.className = 'quality-btn';
+      btn.dataset.quality = q.id;
       btn.innerText = q.label;
-      
       btn.addEventListener('click', () => {
-        document.querySelectorAll('#qualityContainer .builder-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
         currentQuality = q.id;
+        updateBuilderActiveStates();
         updateSelection();
       });
-      qualityContainer.appendChild(btn);
+      primaryContainer.appendChild(btn);
     });
+
+    if (extraQualities.length > 0) {
+      const toggleBtn = document.createElement('button');
+      toggleBtn.className = 'toggle-extra-btn';
+      toggleBtn.innerHTML = 'Додатково ▼';
+      qualityContainer.appendChild(toggleBtn);
+
+      const extraWrapper = document.createElement('div');
+      extraWrapper.className = 'extra-qualities-wrapper';
+
+      const extraInner = document.createElement('div');
+      extraInner.className = 'extra-qualities-inner';
+
+      extraQualities.forEach(q => {
+        const btn = document.createElement('button');
+        btn.className = 'quality-btn';
+        btn.dataset.quality = q.id;
+        btn.innerText = q.label;
+        btn.addEventListener('click', () => {
+          currentQuality = q.id;
+          updateBuilderActiveStates();
+          updateSelection();
+        });
+        extraInner.appendChild(btn);
+      });
+
+      extraWrapper.appendChild(extraInner);
+      qualityContainer.appendChild(extraWrapper);
+
+      toggleBtn.addEventListener('click', () => {
+        extraWrapper.classList.toggle('expanded');
+        toggleBtn.innerHTML = extraWrapper.classList.contains('expanded') ? 'Приховати ▲' : 'Додатково ▼';
+      });
+    }
+
+    updateBuilderActiveStates();
+  }
+
+  function updateBuilderActiveStates() {
+    document.querySelectorAll('.main-note-btn, .mod-btn, .quality-btn').forEach(b => {
+      b.classList.remove('active', 'active-base');
+    });
+
+    let base = currentRoot;
+    let mod = null;
+    if (currentRoot.length > 1) {
+      base = currentRoot[0];
+      mod = currentRoot.substring(1);
+    }
+
+    if (!mod) {
+      const mainBtn = document.querySelector(`.main-note-btn[data-note="${base}"]`);
+      if (mainBtn) mainBtn.classList.add('active');
+    } else {
+      const mainBtn = document.querySelector(`.main-note-btn[data-note="${base}"]`);
+      if (mainBtn) mainBtn.classList.add('active-base'); 
+      const modBtn = document.querySelector(`.mod-btn[data-note="${currentRoot}"]`);
+      if (modBtn) modBtn.classList.add('active');
+    }
+
+    const qBtn = document.querySelector(`.quality-btn[data-quality="${currentQuality}"]`);
+    if (qBtn) qBtn.classList.add('active');
   }
 
   function getQualityLabel() {
@@ -494,7 +577,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (foundKey && foundKey !== "0,0,0,0") {
-        applyVariation(foundKey); // Використовуємо функцію варіації, щоб вона сама поставила баре
+        applyVariation(foundKey); 
       } else {
         setCapo(0);
         currentFingering = [0, 0, 0, 0];
@@ -540,6 +623,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (ukuleleWorkspace.classList.contains('fullscreen-rotated')) {
       mobileRotateBtn.innerText = "✖ Закрити режим грифу";
       mobileRotateBtn.classList.add('active-mode');
+      ukuleleWorkspace.scrollLeft = 0;
+      ukuleleWorkspace.scrollTop = 0;
     } else {
       mobileRotateBtn.innerText = "🔲 Розгорнути гриф (Повноекранний)";
       mobileRotateBtn.classList.remove('active-mode');

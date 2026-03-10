@@ -214,9 +214,7 @@
   display: inline-flex; /* Не розтягується на всю ширину на десктопі */
   flex-wrap: wrap;
   justify-content: center;
-  border-radius: 8px;
   overflow: hidden; 
-  border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(0, 0, 0, 0.3);
   max-width: 100%;
 }
@@ -485,6 +483,162 @@
 }
 
 /* =========================================
+   РЕДИЗАЙН ПАНЕЛІ КОНСТРУКТОРА (МОБІЛЬНИЙ UX)
+   ========================================= */
+
+/* Контейнер для нот (Спліт-кнопки) */
+#rootNotesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.note-group {
+  display: inline-flex;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  
+  /* ФІКС: Кнопки більше не розтягуються на всю ширину */
+  flex: 0 0 auto; 
+  min-width: 55px;
+}
+
+.main-note-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  padding: 0.8rem 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+  text-align: center;
+}
+
+.main-note-btn.active {
+  background: #c04b4b;
+  color: white;
+}
+
+.main-note-btn.active-base {
+  background: rgba(192, 75, 75, 0.4); 
+}
+
+.note-modifiers {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  width: 28px;
+}
+
+.mod-btn {
+  flex: 1;
+  background: #2a2a2a;
+  border: none;
+  color: #aaa;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.mod-btn:first-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.mod-btn:hover { background: #3a3a3a; color: white; }
+
+.mod-btn.active {
+  background: #c04b4b;
+  color: white;
+  font-weight: bold;
+}
+
+/* Контейнер для типів акордів */
+#qualityContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.primary-qualities {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+.quality-btn {
+  /* ФІКС: Кнопки не розтягуються і не мають рамок */
+  flex: 0 0 auto;
+  min-width: 50px;
+  background: transparent; 
+  border: none; 
+  color: var(--text-color);
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.quality-btn.active {
+  background: #3a4a6b;
+  color: white;
+  font-weight: bold;
+}
+
+/* Кнопка "Додатково" та прихований контейнер */
+.toggle-extra-btn {
+  background: transparent;
+  border: 1px rgba(255, 255, 255, 0.2);
+  color: #aaa;
+  padding: 0.4rem 2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-top: 0.8rem;
+  margin-bottom: 0.4rem;
+  transition: 0.2s;
+}
+
+.toggle-extra-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.extra-qualities-wrapper {
+  width: 100%;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.extra-qualities-wrapper.expanded {
+  max-height: 500px;
+}
+
+.extra-qualities-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+/* =========================================
    МОБІЛЬНА АДАПТАЦІЯ ТА ПОВОРОТ
    ========================================= */
 .mobile-only { 
@@ -602,24 +756,31 @@
     min-width: 45px;
   }
 
+  /* =========================================
+     ПОВНОЕКРАННИЙ РЕЖИМ (ЖОРСТКА ФІКСАЦІЯ)
+     ========================================= */
   .ukulele-scroll-wrapper.fullscreen-rotated {
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100vw; 
-    height: 100vh;
-    background: #121212; 
-    z-index: 9999;
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    overflow: hidden; 
+    position: fixed !important; 
+    top: 0 !important; 
+    left: 0 !important; 
+    width: 100vw !important; 
+    height: 100vh !important;
+    background: #121212 !important; 
+    z-index: 9999 !important;
+    display: block !important; /* Відключаємо flex, щоб уникнути багів браузера */
+    overflow: hidden !important; 
     margin: 0 !important; 
+    padding: 0 !important;
   }
   
   .ukulele-scroll-wrapper.fullscreen-rotated .ukulele-view {
-    transform: rotate(90deg);
-    transform-origin: center;
+    position: absolute !important;
+    top: 50% !important; /* Завжди 50% від висоти екрану */
+    left: 50% !important; /* Завжди 50% від ширини екрану */
+    margin: 0 !important;
+    /* Відцентровуємо відносно власних розмірів і повертаємо на 90 градусів */
+    transform: translate(-50%, -50%) rotate(90deg) !important;
+    transform-origin: center center !important;
   }
 
   .rotate-btn.active-mode {
