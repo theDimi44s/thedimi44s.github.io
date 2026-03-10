@@ -47,10 +47,9 @@
 
 /* ІНФО-БЛОКИ (Рамки) */
 .info-box {
-  background: rgba(0, 0, 0, 0.2); 
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(49, 43, 43, 0.2); 
   padding: 1rem 1.5rem; 
-  border-radius: 12px; 
+  border-radius: 8px; 
   margin-bottom: 1.5rem;
 }
 
@@ -82,13 +81,10 @@
 .chord-display-board {
   text-align: center; 
   padding: 1rem 3rem; 
-  border-radius: 5px; 
-  border: 1px solid rgba(192, 75, 75, 0.3);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
   min-width: 300px; 
   width: 100%; 
   max-width: 500px;
-  margin-bottom: 1.5rem;
 }
 
 .chord-name { 
@@ -636,6 +632,87 @@
   gap: 0.4rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+
+/* =========================================
+   ВАРІАЦІЇ АКОРДУ (Плавний виїзд)
+   ========================================= */
+.variations-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 30px;
+  
+  /* --- ХОВАЄМО І ЗВІЛЬНЯЄМО МІСЦЕ --- */
+  max-height: 0;
+  padding: 0 1.5rem; 
+  margin-top: 0;
+  opacity: 0;
+  overflow: hidden;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 101;
+}
+
+/* Коли скрипт додає клас .visible */
+.variations-container.visible {
+  max-height: 60px; /* Розгортаємо висоту */
+  padding: 0.6rem 1.5rem; /* Повертаємо відступи */
+  margin-top: 1.5rem;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto !important;
+}
+
+.variations-label {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: bold;
+}
+
+.variations-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.var-btn {
+  background: #c04b4b;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.var-btn:hover {
+  background: #a03535;
+  transform: scale(1.15);
+}
+
+.var-count {
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  min-width: 45px;
+  text-align: center;
 }
 
 /* =========================================
