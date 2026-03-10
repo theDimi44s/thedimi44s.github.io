@@ -625,25 +625,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // --- ЛОГІКА РОЗВОРОТУ НА МОБІЛЬНИХ (ПОВНОЕКРАННИЙ РЕЖИМ) ---
   mobileRotateBtn.addEventListener('click', () => {
     ukuleleWorkspace.classList.toggle('fullscreen-rotated');
+    
     if (ukuleleWorkspace.classList.contains('fullscreen-rotated')) {
-      mobileRotateBtn.innerText = "✖ Закрити режим грифу";
+      mobileRotateBtn.innerText = "✖ Закрити режим";
       mobileRotateBtn.classList.add('active-mode');
+      
+      // ЖОРСТКА ФІКСАЦІЯ: обнуляю будь-який збережений скрол, щоб гриф не вилетів за екран
       ukuleleWorkspace.scrollLeft = 0;
       ukuleleWorkspace.scrollTop = 0;
     } else {
-      mobileRotateBtn.innerText = "🔲 Розгорнути гриф (Повноекранний)";
+      mobileRotateBtn.innerText = "🔲 На весь екран";
       mobileRotateBtn.classList.remove('active-mode');
     }
   });
-
-  if (infoToggleBtn && infoContent) {
-    infoToggleBtn.addEventListener('click', () => {
-      infoContent.classList.toggle('open');
-      infoToggleBtn.classList.toggle('active');
-    });
-  }
+  
 
   buildMatrix();
   buildLibrary();

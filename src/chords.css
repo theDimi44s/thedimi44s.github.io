@@ -850,14 +850,24 @@
     padding: 0 !important;
   }
   
-  .ukulele-scroll-wrapper.fullscreen-rotated .ukulele-view {
+.ukulele-scroll-wrapper.fullscreen-rotated .ukulele-view {
     position: absolute !important;
     top: 50% !important; /* Завжди 50% від висоти екрану */
     left: 50% !important; /* Завжди 50% від ширини екрану */
     margin: 0 !important;
-    /* Відцентровуємо відносно власних розмірів і повертаємо на 90 градусів */
+    
+    /* За замовчуванням (якщо тримаю телефон вертикально) - перевертаю гриф кодом */
     transform: translate(-50%, -50%) rotate(90deg) !important;
     transform-origin: center center !important;
+  }
+
+  /* РОЗУМНИЙ ПЕРЕВОРОТ: Якщо я фізично перевернув телефон (горизонтально), 
+     браузер сам переверне екран. Тому я скасовую CSS-переворот, 
+     щоб уникнути подвійного обертання і каші. */
+  @media (orientation: landscape) {
+    .ukulele-scroll-wrapper.fullscreen-rotated .ukulele-view {
+      transform: translate(-50%, -50%) rotate(0deg) !important;
+    }
   }
 
   .rotate-btn.active-mode {
@@ -869,5 +879,20 @@
     color: white; 
     border: none; 
     width: auto;
+  }
+
+  #mobileRotateBtn.active-mode {
+    position: fixed !important;
+    bottom: 2rem !important; /* Відступ від нижнього краю екрану */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 10000 !important; /* 10000 - це вище, ніж 9999 у грифа */
+    width: auto !important;
+    padding: 0.8rem 1.5rem !important;
+    border-radius: 30px !important;
+    background-color: #c04b4b !important; /* Яскраво-червона, щоб кидалась в очі */
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6) !important;
   }
 }
