@@ -25,150 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentMode = 'library'; 
   let currentVariations = [];
   let currentVariationIndex = 0;
+  let currentLibraryTarget = null; 
 
-   // База даних акордів
-  const chordDatabase = {
-
-    //УКУЛЕЛЕ
-
-    // --- АКОРДИ БЕЗ КАПО ---
-    "0,0,0,0": { name: "C6 / Am7", note: "Відкриті струни" },
-
-    // Базові мажорні акорди та їх ВАРІАЦІЇ
-    "0,0,0,3": { name: "C", note: "До мажор" },
-    "5,4,3,3": { name: "C", note: "До мажор + Баре 3" }, 
-
-    "2,2,2,0": { name: "D", note: "Ре мажор" },
-    "2,2,2,5": { name: "D", note: "Ре мажор" }, 
-
-    "1,4,0,2": { name: "E", note: "Мі мажор" },
-    "4,4,4,2": { name: "E", note: "Мі мажор (Альт.)" },
-    "1,2,2,2": { name: "E", note: "Мі мажор (Альт.)" },
-    "4,4,4,7": { name: "E", note: "Мі мажор (Альт.)" },
-  
-
-    "2,0,1,0": { name: "F", note: "Фа мажор" },
-    "5,5,5,8": { name: "F", note: "Фа мажор + Баре 5" }, 
-    
-    "0,2,3,2": { name: "G", note: "Соль мажор" },
-    "4,2,3,2": { name: "G", note: "Соль мажор (Альт.)" }, 
-    "7,7,7,10": { name: "G", note: "Соль мажор + Баре 7" }, 
-
-    "2,1,0,0": { name: "A", note: "Ля мажор" },
-
-    "4,3,2,2": { name: "B", note: "Сі мажор" },
-
-    // Базові мажорні (дієзи/бемолі)
-    "1,1,1,4": { name: "C# / Db", note: "До# / Реb мажор" },
-    "0,3,3,1": { name: "D# / Eb", note: "Ре# / Міb мажор" },
-    "3,1,2,1": { name: "F# / Gb", note: "Фа# / Сольb мажор" },
-    "5,3,4,3": { name: "G# / Ab", note: "Соль# / Ляb мажор" },
-    "3,2,1,1": { name: "A# / Bb", note: "Ля# / Сіb мажор" },
-
-    // Базові мінорні акорди 
-    "0,3,3,3": { name: "Cm", note: "До мінор" },
-    "2,2,1,0": { name: "Dm", note: "Ре мінор" },
-    "0,4,3,2": { name: "Em", note: "Мі мінор" },
-    "1,0,1,3": { name: "Fm", note: "Фа мінор" },
-    "0,2,3,1": { name: "Gm", note: "Соль мінор" },
-    "2,0,0,0": { name: "Am", note: "Ля мінор" },
-    "4,2,2,2": { name: "Bm", note: "Сі мінор" },
-
-    // Базові мінорні (дієзи/бемолі)
-    "1,1,0,4": { name: "C#m / Dbm", note: "До# / Реb мінор" },
-    "3,3,2,1": { name: "D#m / Ebm", note: "Ре# / Міb мінор" },
-    "2,1,2,0": { name: "F#m / Gbm", note: "Фа# / Сольb мінор" },
-    "4,3,4,2": { name: "G#m / Abm", note: "Соль# / Ляb мінор" },
-    "3,1,1,1": { name: "A#m / Bbm", note: "Ля# / Сіb мінор" },
-
-    // Септакорди 
-    "0,0,0,1": { name: "C7", note: "До септакорд" },
-    "2,0,2,0": { name: "D7", note: "Ре септакорд" },
-    "1,2,0,2": { name: "E7", note: "Мі септакорд" },
-    "2,3,1,0": { name: "F7", note: "Фа септакорд" },
-    "0,2,1,2": { name: "G7", note: "Соль септакорд" },
-    "0,1,0,0": { name: "A7", note: "Ля септакорд" },
-    "4,3,2,0": { name: "B7", note: "Сі септакорд" },
-
-    // --- ДОДАТКОВІ MAJ7 ---
-    "1,1,1,3": { name: "C#maj7 / Dbmaj7", note: "До# мажор 7" }, 
-    "0,0,0,2": { name: "Cmaj7", note: "До мажор 7" },
-    "2,2,2,4": { name: "Dmaj7", note: "Ре мажор 7" },
-    "1,3,2,0": { name: "Fmaj7", note: "Фа мажор 7" },
-    "0,2,2,2": { name: "Amaj7", note: "Ля мажор 7" },
-    "3,2,2,2": { name: "Bbmaj7 / A#maj7", note: "Сіb мажор 7" },
-    "4,3,3,2": { name: "Bmaj7", note: "Сі мажор 7" },
-
-    // --- МІНОРНІ СЕПТАКОРДИ (m7) ---
-    "0,3,3,3": { name: "Cm7", note: "До мінор 7" },
-    "2,2,1,3": { name: "Dm7", note: "Ре мінор 7" },
-    "0,2,0,2": { name: "Em7", note: "Мі мінор 7" },
-    "1,3,1,3": { name: "Fm7", note: "Фа мінор 7" },
-    "0,2,1,1": { name: "Gm7", note: "Соль мінор 7" },
-    "2,0,0,0": { name: "Am7", note: "Ля мінор 7" },
-    "2,2,2,2": { name: "Bm7", note: "Сі мінор 7" },
-
-    // --- DIM (ЗМЕНШЕНІ) ---
-    "2,3,2,3": { name: "Cdim", note: "До diminished" },
-    "1,2,1,2": { name: "Ddim", note: "Ре diminished" },
-    "0,1,0,1": { name: "Edim", note: "Мі diminished" },
-    "1,2,1,2": { name: "Fdim", note: "Фа diminished" },
-    "2,3,2,3": { name: "Gdim", note: "Соль diminished" },
-    "2,3,2,3": { name: "Adim", note: "Ля diminished" },
-    "3,4,3,4": { name: "Bdim", note: "Сі diminished" },
-
-    // --- AUG (ЗБІЛЬШЕНІ) ---
-    "1,0,0,3": { name: "Caug", note: "До augmented" },
-    "3,2,2,1": { name: "Daug", note: "Ре augmented" },
-    "1,0,0,3": { name: "Eaug", note: "Мі augmented" },
-    "2,1,1,0": { name: "Faug", note: "Фа augmented" },
-    "0,3,3,2": { name: "Gaug", note: "Соль augmented" },
-    "2,1,1,0": { name: "Aaug", note: "Ля augmented" },
-
-    // --- SUS2 ---
-    "0,2,3,0": { name: "Csus2", note: "До sus2" },
-    "2,2,0,0": { name: "Dsus2", note: "Ре sus2" },
-    "4,4,2,2": { name: "Esus2", note: "Мі sus2" },
-    "0,0,1,3": { name: "Fsus2", note: "Фа sus2" },
-    "0,2,3,0": { name: "Gsus2", note: "Соль sus2" },
-    "2,4,5,2": { name: "Asus2", note: "Ля sus2" },
-
-    // --- ДОДАТКОВІ SUS4 ---
-    "0,0,1,3": { name: "Csus4", note: "До sus4" },
-    "2,2,3,0": { name: "Dsus4", note: "Ре sus4" },
-    "3,3,1,1": { name: "Fsus4", note: "Фа sus4" },
-    "0,0,1,1": { name: "Gsus4", note: "Соль sus4" },
-    "2,2,0,0": { name: "Asus4", note: "Ля sus4" },
-
-    // --- ADD9 ---
-    "0,0,3,3": { name: "Cadd9", note: "До add9" },
-    "2,2,2,3": { name: "Dadd9", note: "Ре add9" },
-    "0,2,4,2": { name: "Gadd9", note: "Соль add9" },
-    "2,0,0,2": { name: "Aadd9", note: "Ля add9" },
-
-    // Акорди з капо
-    "1,1,1,1": { name: "C#6 / A#m7", note: "До#5 / Ля#м7 (Капо 1)" },
-    "2,2,2,2": { name: "D6 / Bm7", note: "Ре6 / Сім7 (Капо 2)" },
-    "3,3,3,3": { name: "D#6 / Cm7", note: "Ре#6 / Дом7 (Капо 3)" },
-    "4,4,4,4": { name: "E6 / C#m7", note: "Ми6 (Капо 4)" },
-    "5,5,5,5": { name: "F6 / Dm7", note: "Фа6 / Рем7 (Капо 5)" },
-    "6,6,6,6": { name: "F#6 / D#m7", note: "Фа#6 / Ре#7 (Капо 6)" },
-    "7,7,7,7": { name: "G6 / Em7", note: "Соль6 / Мим7 (Капо 7)" },
-    "8,8,8,8": { name: "G#6 / Fm7", note: "Соль#6 / Фам7 (Капо 8)" },
-    "9,9,9,9": { name: "A6 / F#m7", note: "Ля6 / Фа#м7 (Капо 9)" },
-    "10,10,10,10": { name: "A#6 / Gm7", note: "Ля#6 / Сольм7 (Капо 10)" },
-
-    // Інші акорди з капо
-    "1,2,1,1": { name: "A#7 / Bb7", note: "Ля#7 / Сіb7 (Міні-баре)" },
-    //Потрібно додавати *barre, щоб відображався в діалоговому вікні варіацій, інакше JS видалить як копію
-    "1,2,1,1*barre": { name: "A#7 / Bb7", note: "Ля#7 / Сіb7 (З повним баре)", barre: 1 }, 
-    "1,1,1,2": { name: "C#7 / Db7", note: "До#7 (Капо 1)" }, 
-    "1,1,4,4": { name: "C#5 / Db5", note: "До#5 (Капо 1)" }
-
-    //ГІТАРА
-
-
-  };
+  const chordDatabase = window.chordDatabase || {};
 
   const tabInfoContent = {
     library: `<p><strong>&#10069; Інфо (Акорди):</strong><br>Натисни відповідний акорд з панелі нижче й отримай його вивід на укулеле!</p>`,
@@ -287,8 +146,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function switchToBuildMode() {
     if (currentMode === 'build') return;
     currentMode = 'build';
+    currentLibraryTarget = null; 
     tabBtns.forEach(b => b.classList.remove('active'));
-    document.querySelector('[data-tab="build"]').classList.add('active');
+    const buildTab = document.querySelector('[data-tab="build"]');
+    if (buildTab) buildTab.classList.add('active');
     infoContent.innerHTML = tabInfoContent['build'];
     libraryPanel.style.display = 'none'; 
   }
@@ -386,9 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setCapo(0); 
     currentFingering = [0, 0, 0, 0];
     updateUI();
-    chordNameEl.innerText = "---";
-    chordNotesEl.innerText = "Вибери лади на струнах";
-    hideVariations();
+    checkChord(); 
   });
 
   function hideVariations() {
@@ -403,8 +262,9 @@ document.addEventListener('DOMContentLoaded', () => {
     currentVariations = [];
     
     for (const [key, data] of Object.entries(chordDatabase)) {
-      if (key === "0,0,0,0") continue;
+      if (!data || !data.name) continue;
       const dbNames = data.name.split('/').map(n => n.trim());
+      
       if (targetNames.some(t => dbNames.includes(t))) {
         currentVariations.push(key);
       }
@@ -424,8 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
     variationsContainer.classList.add('visible');
   }
 
-function applyVariation(key) {
-    // Відділяємо чисті лади від суфікса (якщо він є, напр. *barre)
+  function applyVariation(key) {
     let cleanKey = key.split('*')[0]; 
     let fingeringArr = cleanKey.split(',').map(val => val === 'X' ? 'X' : Number(val));
     let validFrets = fingeringArr.filter(f => typeof f === 'number' && f > 0);
@@ -433,12 +292,9 @@ function applyVariation(key) {
 
     const chordData = chordDatabase[key];
 
-    // Логіка: Примусове баре з бази даних
     if (chordData && chordData.barre !== undefined) {
       suggestedCapo = chordData.barre;
-    } 
-    // Логіка: Автоматичне повне баре 
-    else if (validFrets.length === 4) { 
+    } else if (validFrets.length === 4) { 
       let minFret = Math.min(...validFrets);
       let minFretCount = validFrets.filter(f => f === minFret).length;
       if (minFretCount === 4) {
@@ -449,7 +305,7 @@ function applyVariation(key) {
     setCapo(suggestedCapo); 
     currentFingering = fingeringArr; 
     updateUI();
-    checkChord(key); // Передаємо точний ключ із зірочкою
+    checkChord(key); 
   }
 
   if (prevVariationBtn && nextVariationBtn) {
@@ -466,20 +322,19 @@ function applyVariation(key) {
     });
   }
 
-function checkChord(forcedKey = null) {
+  // --- ЛОГІКА ВІДОБРАЖЕННЯ НАЗВИ АКОРДУ ТА ОПИСУ ---
+  function checkChord(forcedKey = null) {
     const baseKey = currentFingering.join(',');
     let foundKey = null;
     let foundChord = null;
 
-    // Якщо ми явно передали ключ (наприклад, перемкнули варіацію)
     if (forcedKey && chordDatabase[forcedKey]) {
       foundKey = forcedKey;
       foundChord = chordDatabase[forcedKey];
     } else {
-      // Інакше шукаємо стандартний акорд
       foundKey = baseKey;
       foundChord = chordDatabase[baseKey];
-      // Якщо точного збігу немає, шукаємо варіацію із зірочкою
+      
       if (!foundChord) {
         foundKey = Object.keys(chordDatabase).find(k => k.split('*')[0] === baseKey);
         if (foundKey) foundChord = chordDatabase[foundKey];
@@ -489,8 +344,40 @@ function checkChord(forcedKey = null) {
     const soundingNotes = currentFingering.map((fret, stringIdx) => getNoteName(stringIdx, fret));
     
     if (foundChord) {
-      chordNameEl.innerText = foundChord.name;
-      chordNotesEl.innerText = `${foundChord.note} (${soundingNotes.join(' - ')})`;
+      let displayChordName = foundChord.name;
+      let displayChordNote = foundChord.note || "";
+
+      if (currentMode === 'library') {
+        if (currentLibraryTarget) {
+          const namesList = foundChord.name.split('/').map(n => n.trim());
+          const notesList = displayChordNote.split('/').map(n => n.trim());
+          const targetIdx = namesList.indexOf(currentLibraryTarget);
+          
+          if (targetIdx !== -1) {
+            displayChordName = currentLibraryTarget; 
+            // Якщо для вибраної назви є відповідний опис - беремо його, якщо ні - залишаємо оригінальний
+            displayChordNote = notesList[targetIdx] || displayChordNote;
+          }
+        } else {
+          // Якщо відкрито за замовчуванням
+          displayChordName = foundChord.name.split('/')[0].trim();
+          displayChordNote = displayChordNote.split('/')[0].trim();
+        }
+      } else if (currentMode === 'build') {
+        const pureBaseChord = chordDatabase[baseKey];
+        if (pureBaseChord && pureBaseChord.name) {
+             displayChordName = pureBaseChord.name;
+             displayChordNote = pureBaseChord.note || "";
+        } else {
+             displayChordName = foundChord.name; 
+             displayChordNote = foundChord.note || "";
+        }
+      }
+
+      chordNameEl.innerText = displayChordName;
+      // Відображаємо тільки відредагований текст ноти + самі ноти
+      chordNotesEl.innerText = `${displayChordNote} (${soundingNotes.join(' - ')})`;
+      
       if (currentMode === 'library' || currentMode === 'build') {
          updateVariationsUI(foundChord.name, foundKey);
       } else {
@@ -515,10 +402,9 @@ function checkChord(forcedKey = null) {
         libraryPanel.style.display = 'none'; 
         setCapo(0);
         currentFingering = [0, 0, 0, 0];
+        currentLibraryTarget = null;
         updateUI();
-        chordNameEl.innerText = "---";
-        chordNotesEl.innerText = "Вибери лади на струнах";
-        hideVariations();
+        checkChord(); 
       } else {
         libraryPanel.style.display = 'flex'; 
         currentQuality = (currentMode === 'library') ? '' : modeConfigs[currentMode].qualities[0].id;
@@ -676,28 +562,52 @@ function checkChord(forcedKey = null) {
 
   function updateSelection() {
     if (currentMode === 'library') {
-      const targetName1 = currentRoot + currentQuality; 
-      const equivalentRoot = enharmonicMap[currentRoot] || currentRoot;
-      const targetName2 = equivalentRoot + currentQuality;
-
+      const targetName = currentRoot + currentQuality; 
+      currentLibraryTarget = targetName; 
+      
       let foundKey = null;
 
-      for (const [key, data] of Object.entries(chordDatabase)) {
-        const namesList = data.name.split('/').map(n => n.trim());
-        if (namesList.includes(targetName1) || namesList.includes(targetName2)) {
-          foundKey = key;
-          break;
+      // Спочатку ПРІОРИТЕТНО шукаємо точний збіг по імені (наприклад, тільки "C6")
+      foundKey = Object.keys(chordDatabase).find(key => 
+        chordDatabase[key] && chordDatabase[key].name === targetName
+      );
+
+      // Якщо точного немає - тоді шукаємо його всередині збірних записів (наприклад, "Am7 / C6")
+      if (!foundKey) {
+        for (const [key, data] of Object.entries(chordDatabase)) {
+          if (!data || !data.name) continue;
+          const namesList = data.name.split('/').map(n => n.trim());
+          if (namesList.includes(targetName)) {
+            foundKey = key;
+            break;
+          }
         }
       }
+      
+      if (foundKey) {
+        let cleanKey = foundKey.split('*')[0];
+        let fingeringArr = cleanKey.split(',').map(val => val === 'X' ? 'X' : Number(val));
+        
+        let validFrets = fingeringArr.filter(f => typeof f === 'number' && f > 0);
+        let suggestedCapo = 0;
+        if (chordDatabase[foundKey] && chordDatabase[foundKey].barre !== undefined) {
+          suggestedCapo = chordDatabase[foundKey].barre;
+        } else if (validFrets.length === 4) { 
+          let minFret = Math.min(...validFrets);
+          let minFretCount = validFrets.filter(f => f === minFret).length;
+          if (minFretCount === 4) suggestedCapo = minFret;
+        }
 
-      if (foundKey && foundKey !== "0,0,0,0") {
-        applyVariation(foundKey); 
+        setCapo(suggestedCapo); 
+        currentFingering = fingeringArr;
+        updateUI();
+        checkChord(foundKey);
       } else {
         setCapo(0);
         currentFingering = [0, 0, 0, 0];
         updateUI(); 
-        chordNameEl.innerText = targetName1;
-        chordNotesEl.innerText = "Акорд відсутній у базі (потрібно додати)";
+        chordNameEl.innerText = targetName;
+        chordNotesEl.innerText = "Акорд відсутній у базі";
         hideVariations();
       }
 
@@ -739,8 +649,6 @@ function checkChord(forcedKey = null) {
     if (ukuleleWorkspace.classList.contains('fullscreen-rotated')) {
       mobileRotateBtn.innerText = "✖ Закрити режим";
       mobileRotateBtn.classList.add('active-mode');
-      
-      // ЖОРСТКА ФІКСАЦІЯ: обнуляю будь-який збережений скрол, щоб гриф не вилетів за екран
       ukuleleWorkspace.scrollLeft = 0;
       ukuleleWorkspace.scrollTop = 0;
     } else {

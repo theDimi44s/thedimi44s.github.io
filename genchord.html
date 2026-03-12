@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>Chord Generator</title>
+
+<style>
+body{
+background:#0f1117;
+color:#e6edf3;
+font-family:system-ui;
+padding:40px;
+}
+
+button{
+background:#238636;
+border:none;
+padding:10px 16px;
+margin:5px;
+color:white;
+border-radius:8px;
+cursor:pointer;
+}
+
+textarea{
+width:100%;
+height:500px;
+background:#0d1117;
+border:1px solid #30363d;
+color:#c9d1d9;
+padding:15px;
+border-radius:8px;
+font-family:monospace;
+}
+
+select{
+background:#161b22;
+color:white;
+border:1px solid #30363d;
+padding:8px;
+border-radius:6px;
+margin-right:10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>Генератор акордів</h2>
+
+<button onclick="setInstrument('ukulele')">Укулеле</button>
+<button onclick="setInstrument('baritone')">Баритон</button>
+<button onclick="setInstrument('guitar')">Гітара</button>
+<button onclick="setInstrument('guitalele')">Гіталеле</button>
+<button onclick="setInstrument('bass')">Бас</button>
+
+<br><br>
+
+<select id="chordType"></select>
+
+<select id="limit">
+<option value="6">6 позицій</option>
+<option value="10">10 позицій</option>
+<option value="20">20 позицій</option>
+<option value="40">40 позицій</option>
+</select>
+
+<label>
+<input type="checkbox" id="proMode">
+Про-режим
+</label>
+
+<br><br>
+
+<button onclick="generate()">Генерувати</button>
+<button onclick="copyResult()">Скопіювати</button>
+
+<br><br>
+
+<textarea id="output"></textarea>
+
+<script>
+
+const NOTES=["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
+
+function noteIndex(n){return NOTES.indexOf(n)}
+
+function getNote(open,fret){
+return NOTES[(noteIndex(open)+fret)%12]
+}
+
+const instruments={
+ukulele:["G","C","E","A"],
+baritone:["D","G","B","E"],
+guitar:["E","A","D","G","B","E"],
+guitalele:["A","D","G","C","E","A"],
+bass:["E","A","D","G"]
+}
+
+let tuning=instruments.ukulele
+
+function setInstrument(name){
+tuning=instruments[name]
+}
+
+const chordTypes={
+
+major:{intervals:[0,4,7],required:[0,4]},
+minor:{intervals:[0,3,7],required:[0,3]},
+
+"7":{intervals:[0,4,7,10],required:[0,4,10]},
+maj7:{intervals:[0,4,7,11],required:[0,4,11]},
+m7:{intervals:[0,3,7,10],required:[0,3,10]},
+
+"6":{intervals:[0,4,7,9],required:[0,4,9]},
+m6:{intervals:[0,3,7,9],required:[0,3,9]},
+
+add9:{intervals:[0,4,7,14],required:[0,4,14]},
+
+sus2:{intervals:[0,2,7],required:[0,2]},
+sus4:{intervals:[0,5,7],required:[0,5]},
+
+dim:{intervals:[0,3,6],required:[0,3,6]},
+dim7:{intervals:[0,3,6,9],required:[0,3,6,9]},
+
+aug:{intervals:[0,4,8],required:[0,4,8]}
+
+}
+
+const typeSelect=document.getElementById("chordType")
+
+for(let t in chordTypes){
+let o=document.createElement("option")
+o.value=t
+o.textContent=t
+typeSelect.appendChild(o)
+}
+
+function span(frets){
+return Math.max(...frets)-Math.min(...frets)
+}
+
+function generateFrets(strings,max){
+
+let results=[]
+
+function helper(arr){
+
+if(arr.length===strings){
+results.push([...arr])
+return
+}
+
+for(let i=0;i<=max;i++){
+arr.push(i)
+helper(arr)
+arr.pop()
+}
+
+}
+
+helper([])
+return results
+}
+
+function getIntervals(notes,root){
+
+let r=noteIndex(root)
+
+let ints=[]
+
+for(let n of notes){
+ints.push((noteIndex(n)-r+12)%12)
+}
+
+return [...new Set(ints)]
+}
+
+function rootIsStrong(notes,root){
+
+let lowest=notes[0]
+
+let count=notes.filter(n=>n===root).length
+
+if(lowest===root) return true
+if(count>=2) return true
+
+return false
+}
+
+function validChord(notes,root,type){
+
+let data=chordTypes[type]
+
+if(!rootIsStrong(notes,root)) return false
+
+let ints=getIntervals(notes,root)
+
+for(let r of data.required){
+if(!ints.includes(r%12)) return false
+}
+
+for(let i of ints){
+
+let ok=false
+
+for(let a of data.intervals){
+if(i===a%12) ok=true
+}
+
+if(!ok) return false
+}
+
+return true
+}
+
+function proFilter(notes){
+
+let unique=[...new Set(notes)]
+
+if(unique.length<3) return false
+
+let counts={}
+
+for(let n of notes){
+
+counts[n]=(counts[n]||0)+1
+
+if(counts[n]>2) return false
+}
+
+return true
+}
+
+function detectBarre(frets){
+
+let min=Math.min(...frets)
+
+if(min===0) return null
+
+let count=frets.filter(f=>f===min).length
+
+if(count>=2) return min
+
+return null
+}
+
+function generate(){
+
+let type=document.getElementById("chordType").value
+let limit=parseInt(document.getElementById("limit").value)
+let pro=document.getElementById("proMode").checked
+
+let fretsAll=generateFrets(tuning.length,12)
+
+let output=[]
+
+for(let root of NOTES){
+
+let count=0
+
+for(let frets of fretsAll){
+
+if(count>=limit) break
+if(span(frets)>4) continue
+
+let notes=[]
+
+for(let i=0;i<frets.length;i++){
+notes.push(getNote(tuning[i],frets[i]))
+}
+
+if(!validChord(notes,root,type)) continue
+
+if(pro && !proFilter(notes)) continue
+
+let key=frets.join(",")
+
+let barre=detectBarre(frets)
+
+let name=root+type
+
+let obj
+
+if(barre){
+obj=`"${key}": { name: "${name}", note: "${name}", barre: ${barre} },`
+}else{
+obj=`"${key}": { name: "${name}", note: "${name}" },`
+}
+
+output.push(obj)
+
+count++
+}
+
+}
+
+document.getElementById("output").value=output.join("\n")
+}
+
+function copyResult(){
+navigator.clipboard.writeText(document.getElementById("output").value)
+}
+
+</script>
+
+</body>
+</html>

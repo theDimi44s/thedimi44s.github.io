@@ -69,8 +69,16 @@
      
       <div class="ukulele-scroll-wrapper" id="ukuleleWorkspace">
         <div class="ukulele-view" id="ukuleleView">
+          <div class="fretboard">
+            <div class="string" id="string0"></div>
+            <div class="string" id="string1"></div>
+            <div class="string" id="string2"></div>
+            <div class="string" id="string3"></div>
+            
+            <div id="interactiveLayer" class="interactive-layer"></div>
           <div class="capo-visual" id="capoVisual"></div>
           </div>
+        </div>
       </div>
 
       <div class="controls-row">
@@ -122,6 +130,7 @@
     </section>
   </div>
 
-  <script type="module" src="./src/chords.js"></script>
+  <script src="./src/chordData.js"></script> <!-- Завантаження файлу з даними акордів -->
+  <script src="./src/chords.js"></script>
 </body>
 </html>
