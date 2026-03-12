@@ -2,6 +2,7 @@ import { chordDatabase } from './chordData.js'; // Підтягуємо базу
 
 document.addEventListener('DOMContentLoaded', () => {
   
+  // --- КООРДИНАТИ ТА НАЛАШТУВАННЯ ---
   const stringY = [ 58.39, 52.45, 46.51, 40.96 ];
   const muteX = 26.50; 
   const fretX = [ 
@@ -28,8 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentVariations = [];
   let currentVariationIndex = 0;
   let currentLibraryTarget = null; 
-
-  const chordDatabase = window.chordDatabase || {};
 
   const tabInfoContent = {
     library: `<p><strong>&#10069; Інфо (Акорди):</strong><br>Натисни відповідний акорд з панелі нижче й отримай його вивід на укулеле!</p>`,
