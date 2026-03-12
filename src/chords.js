@@ -95,7 +95,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const nextVariationBtn = document.getElementById('nextVariationBtn');
   const variationCountEl = document.getElementById('variationCount');
 
-  infoContent.innerHTML = tabInfoContent[currentMode];
+  // БЕЗПЕКА: перевіряємо, чи є такий елемент
+  if (infoContent) {
+    infoContent.innerHTML = tabInfoContent[currentMode];
+  }
 
   function getNoteName(stringIdx, fret) {
     if (fret === 'X') return 'X'; 
@@ -111,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function buildMatrix() {
+    if (!ukuleleViewEl) return; // Запобіжник
     ukuleleViewEl.querySelectorAll('.interactive-node, .mute-node').forEach(n => n.remove());
     for (let s = 0; s < STRINGS_COUNT; s++) {
       const muteNode = document.createElement('div');
@@ -150,29 +154,35 @@ document.addEventListener('DOMContentLoaded', () => {
     tabBtns.forEach(b => b.classList.remove('active'));
     const buildTab = document.querySelector('[data-tab="build"]');
     if (buildTab) buildTab.classList.add('active');
-    infoContent.innerHTML = tabInfoContent['build'];
-    libraryPanel.style.display = 'none'; 
+    if (infoContent) infoContent.innerHTML = tabInfoContent['build'];
+    if (libraryPanel) libraryPanel.style.display = 'none'; 
   }
 
-  capoSlider.addEventListener('input', (e) => {
-    if (currentMode !== 'build' && currentMode !== 'library') switchToBuildMode(); 
-    const val = parseInt(e.target.value);
-    if (currentCapo !== val) {
-      if (typeof navigator.vibrate === "function") navigator.vibrate(20); 
-      setCapo(val);
-    }
-  });
+  // БЕЗПЕКА: перевірка на наявність capoSlider
+  if (capoSlider) {
+    capoSlider.addEventListener('input', (e) => {
+      if (currentMode !== 'build' && currentMode !== 'library') switchToBuildMode(); 
+      const val = parseInt(e.target.value);
+      if (currentCapo !== val) {
+        if (typeof navigator.vibrate === "function") navigator.vibrate(20); 
+        setCapo(val);
+      }
+    });
+  }
 
   function setCapo(fret) {
     currentCapo = fret;
-    capoSlider.value = fret; 
+    if (capoSlider) capoSlider.value = fret; 
+    
     if (fret === 0) {
-      capoValueEl.innerText = "0";
-      capoVisual.style.display = "none";
+      if (capoValueEl) capoValueEl.innerText = "0";
+      if (capoVisual) capoVisual.style.display = "none";
     } else {
-      capoValueEl.innerText = `${fret}`;
-      capoVisual.style.display = "block";
-      capoVisual.style.left = `${fretX[fret]}%`;
+      if (capoValueEl) capoValueEl.innerText = `${fret}`;
+      if (capoVisual) {
+        capoVisual.style.display = "block";
+        capoVisual.style.left = `${fretX[fret]}%`;
+      }
     }
     currentFingering = [fret, fret, fret, fret];
     if (currentMode === 'build' || currentMode === 'library') {
@@ -230,6 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function toggleResetButton(forceShow = false) {
+    if (!resetBtn) return;
     if (forceShow) {
       resetBtn.classList.remove('hide');
       return;
@@ -242,13 +253,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  resetBtn.addEventListener('click', () => {
-    switchToBuildMode();
-    setCapo(0); 
-    currentFingering = [0, 0, 0, 0];
-    updateUI();
-    checkChord(); 
-  });
+  // БЕЗПЕКА: перевірка на наявність кнопки очищення
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      switchToBuildMode();
+      setCapo(0); 
+      currentFingering = [0, 0, 0, 0];
+      updateUI();
+      checkChord(); 
+    });
+  }
 
   function hideVariations() {
     if(variationsContainer) variationsContainer.classList.remove('visible');
@@ -280,7 +294,9 @@ document.addEventListener('DOMContentLoaded', () => {
     currentVariationIndex = currentVariations.indexOf(currentKey);
     if (currentVariationIndex === -1) currentVariationIndex = 0; 
 
-    variationCountEl.innerText = `${currentVariationIndex + 1} / ${currentVariations.length}`;
+    if (variationCountEl) {
+       variationCountEl.innerText = `${currentVariationIndex + 1} / ${currentVariations.length}`;
+    }
     variationsContainer.classList.add('visible');
   }
 
@@ -355,11 +371,9 @@ document.addEventListener('DOMContentLoaded', () => {
           
           if (targetIdx !== -1) {
             displayChordName = currentLibraryTarget; 
-            // Якщо для вибраної назви є відповідний опис - беремо його, якщо ні - залишаємо оригінальний
             displayChordNote = notesList[targetIdx] || displayChordNote;
           }
         } else {
-          // Якщо відкрито за замовчуванням
           displayChordName = foundChord.name.split('/')[0].trim();
           displayChordNote = displayChordNote.split('/')[0].trim();
         }
@@ -374,9 +388,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      chordNameEl.innerText = displayChordName;
-      // Відображаємо тільки відредагований текст ноти + самі ноти
-      chordNotesEl.innerText = `${displayChordNote} (${soundingNotes.join(' - ')})`;
+      if (chordNameEl) chordNameEl.innerText = displayChordName;
+      if (chordNotesEl) chordNotesEl.innerText = `${displayChordNote} (${soundingNotes.join(' - ')})`;
       
       if (currentMode === 'library' || currentMode === 'build') {
          updateVariationsUI(foundChord.name, foundKey);
@@ -385,8 +398,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } else {
       let capoSuffix = currentCapo > 0 ? ` (Капо на ${currentCapo})` : "";
-      chordNameEl.innerText = "???";
-      chordNotesEl.innerText = `Ноти: ${soundingNotes.join(' - ')}${capoSuffix}`;
+      if (chordNameEl) chordNameEl.innerText = "???";
+      if (chordNotesEl) chordNotesEl.innerText = `Ноти: ${soundingNotes.join(' - ')}${capoSuffix}`;
       hideVariations();
     }
   }
@@ -396,17 +409,18 @@ document.addEventListener('DOMContentLoaded', () => {
       tabBtns.forEach(b => b.classList.remove('active'));
       e.target.classList.add('active');
       currentMode = e.target.dataset.tab;
-      infoContent.innerHTML = tabInfoContent[currentMode];
+      
+      if (infoContent) infoContent.innerHTML = tabInfoContent[currentMode];
 
       if (currentMode === 'build') {
-        libraryPanel.style.display = 'none'; 
+        if (libraryPanel) libraryPanel.style.display = 'none'; 
         setCapo(0);
         currentFingering = [0, 0, 0, 0];
         currentLibraryTarget = null;
         updateUI();
         checkChord(); 
       } else {
-        libraryPanel.style.display = 'flex'; 
+        if (libraryPanel) libraryPanel.style.display = 'flex'; 
         currentQuality = (currentMode === 'library') ? '' : modeConfigs[currentMode].qualities[0].id;
         buildLibrary(); 
         updateSelection(); 
@@ -418,6 +432,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const rootContainer = document.getElementById('rootNotesContainer');
     const qualityContainer = document.getElementById('qualityContainer');
     
+    if (!rootContainer || !qualityContainer) return;
+
     rootContainer.innerHTML = '';
     qualityContainer.innerHTML = '';
 
@@ -567,12 +583,10 @@ document.addEventListener('DOMContentLoaded', () => {
       
       let foundKey = null;
 
-      // Спочатку ПРІОРИТЕТНО шукаємо точний збіг по імені (наприклад, тільки "C6")
       foundKey = Object.keys(chordDatabase).find(key => 
         chordDatabase[key] && chordDatabase[key].name === targetName
       );
 
-      // Якщо точного немає - тоді шукаємо його всередині збірних записів (наприклад, "Am7 / C6")
       if (!foundKey) {
         for (const [key, data] of Object.entries(chordDatabase)) {
           if (!data || !data.name) continue;
@@ -606,8 +620,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setCapo(0);
         currentFingering = [0, 0, 0, 0];
         updateUI(); 
-        chordNameEl.innerText = targetName;
-        chordNotesEl.innerText = "Акорд відсутній у базі";
+        if (chordNameEl) chordNameEl.innerText = targetName;
+        if (chordNotesEl) chordNotesEl.innerText = "Акорд відсутній у базі";
         hideVariations();
       }
 
@@ -635,27 +649,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      chordNameEl.innerText = `${currentRoot.replace('#', '♯')} ${getQualityLabel()}`;
-      chordNotesEl.innerText = `Ноти: ${displayNotes.join(' - ')}`;
+      if (chordNameEl) chordNameEl.innerText = `${currentRoot.replace('#', '♯')} ${getQualityLabel()}`;
+      if (chordNotesEl) chordNotesEl.innerText = `Ноти: ${displayNotes.join(' - ')}`;
       toggleResetButton(true); 
       hideVariations();
     }
   }
 
   // --- ЛОГІКА РОЗВОРОТУ НА МОБІЛЬНИХ (ПОВНОЕКРАННИЙ РЕЖИМ) ---
-  mobileRotateBtn.addEventListener('click', () => {
-    ukuleleWorkspace.classList.toggle('fullscreen-rotated');
-    
-    if (ukuleleWorkspace.classList.contains('fullscreen-rotated')) {
-      mobileRotateBtn.innerText = "✖ Закрити режим";
-      mobileRotateBtn.classList.add('active-mode');
-      ukuleleWorkspace.scrollLeft = 0;
-      ukuleleWorkspace.scrollTop = 0;
-    } else {
-      mobileRotateBtn.innerText = "🔲 На весь екран";
-      mobileRotateBtn.classList.remove('active-mode');
-    }
-  });
+  // БЕЗПЕКА: перевірка на наявність кнопки розвороту
+  if (mobileRotateBtn) {
+    mobileRotateBtn.addEventListener('click', () => {
+      if (ukuleleWorkspace) {
+        ukuleleWorkspace.classList.toggle('fullscreen-rotated');
+        
+        if (ukuleleWorkspace.classList.contains('fullscreen-rotated')) {
+          mobileRotateBtn.innerText = "✖ Закрити режим";
+          mobileRotateBtn.classList.add('active-mode');
+          ukuleleWorkspace.scrollLeft = 0;
+          ukuleleWorkspace.scrollTop = 0;
+        } else {
+          mobileRotateBtn.innerText = "🔲 На весь екран";
+          mobileRotateBtn.classList.remove('active-mode');
+        }
+      }
+    });
+  }
 
 
   buildMatrix();
