@@ -1,7 +1,7 @@
 // Файл: src/chordData.js
 
     // База даних акордів
-window.chordDatabase = {
+export const chordDatabase = {
     
     //УКУЛЕЛЕ
 

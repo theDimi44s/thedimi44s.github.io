@@ -1,3 +1,5 @@
+import { chordDatabase } from './chordData.js'; // Підтягуємо базу
+
 document.addEventListener('DOMContentLoaded', () => {
   
   const stringY = [ 58.39, 52.45, 46.51, 40.96 ];
