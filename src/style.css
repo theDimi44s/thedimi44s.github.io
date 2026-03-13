@@ -19,6 +19,15 @@ body {
   background-color: var(--bg-dark);
   color: var(--text-main);
   line-height: 1.6;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* IE10+/Edge */
+  user-select: none;         /* Стандартний синтаксис */
+}
+
+input, textarea {
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 .container {

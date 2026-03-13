@@ -13,36 +13,18 @@
   <div class="container chords-container">
     <header class="hero compact-hero">
       <a href="/music.html" class="btn secondary back-btn">← До Музики</a>
-      <h1>Інтерактивний <span class="highlight red-text">Гриф</span></h1>
-    </header>
-
-    <!-- Інструментальний селектор -->
-    <div class="instrument-selector">
+        <!-- Інструментальний селектор -->
+  
+  <div class="instrument-selector">
       <button class="inst-btn active">Укулеле</button>
       <button class="inst-btn">Баритон</button>
       <button class="inst-btn">Гіталеле</button>
       <button class="inst-btn">Гітара</button>
       <button class="inst-btn">Бас</button>
-    </div>
+  </div>
 
-    <!-- Опис та інструкції -->
-   <div class="info-box description-box">
-      <div class="info-toggle-header" id="infoToggleBtn">
-        <strong>&#10069; Інфо та FAQ</strong>
-        <span class="toggle-icon">▼</span>
-      </div>
-      
-      <div class="info-content" id="infoContent">
-        <p><strong>&#10069; Інфо:</strong><br>
-          Затискайте струни, щоб побачити назву акорду, або використовуйте бібліотеку для 
-          автоматичної побудови. За замовчуванням відображається стандартний стрій <b>(G-C-E-A)</b><br><br>
-          
-         <b>&#10071; FAQ:</b><br>
-         Натисніть на будь який лад - отримаєте назву ноти<br>
-         Затисніть <b>три ноти</b> - отримаєте аккорд<br>
-         <b>Баре-слайдер</b> - рухайте ним по ладам та використовуйте з нотами отримуючи потрібний аккорд</p>
-      </div>
-    </div>
+      <h1>Інтерактивний <span class="highlight red-text">Гриф</span></h1>
+    </header> 
 
     <section class="chord-finder-section">
       
@@ -65,8 +47,24 @@
         <div class="builder-row" id="qualityContainer"></div>
       </div>
 
-     <button id="mobileRotateBtn" class="mobile-only btn secondary">🔲 На весь екран</button>
+      <!-- Кнопка "на весь екран" -->
+    <div class="fretboard-toolbar">
+        
+        <button id="mobileRotateBtn" class="icon-fullscreen-btn" title="На весь екран">
+          <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+        </button>
+
+        <button id="resetBtn" class="icon-reset-btn" title="Очистити гриф">🗑️</button>
+
+      </div>
      
+
+      <!-- Кнопка очистки грифа -->
+      <div style="position: relative; width: 100%;">
+        <button id="resetBtn" class="icon-reset-btn" title="Очистити гриф">🗑️</button>
+      </div>
+
+           <!-- Інтерактивний гриф -->
       <div class="ukulele-scroll-wrapper" id="ukuleleWorkspace">
         <div class="ukulele-view" id="ukuleleView">
           <div class="fretboard">
@@ -117,19 +115,21 @@
           </div>
         </div>
       </div>
-      
-      <div class="action-row">
-        <button id="resetBtn" class="btn red hide">Очистити гриф</button>
-      </div>
 
       <div class="info-box additional-info-box">
         <h4>Додаткова інформація</h4>
-        <p>Тут згодом буде розміщена додаткова інформація щодо побудови акордів, інтервалів або музичної теорії.</p>
+        <p>Затискайте струни, щоб побачити назву акорду, або використовуйте бібліотеку для 
+          автоматичної побудови. За замовчуванням відображається стандартний стрій <b>(G-C-E-A)</b><br><br>
+         Натисніть на будь який лад - отримаєте назву ноти<br>
+         Затисніть <b>три ноти</b> - отримаєте аккорд<br>
+        <b>Баре-слайдер</b> - рухайте ним по ладам та використовуйте з нотами отримуючи потрібний аккорд</p>
+
       </div>
 
     </section>
   </div>
 
 <script type="module" src="./src/chords.js"></script>
+<script src="./src/protect.js" defer></script>
 </body>
 </html>
