@@ -9,11 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const muteX = 26.50; 
   const fretX = [ 
     31.00, 35.10, 41.50, 47.80, 53.70, 59.20, 64.30, 
-    69.10, 73.60, 78.10, 82.40 
+    69.10, 73.60, 78.10, 82.40, 86.40, 90.10 
   ];
 
   const STRINGS_COUNT = 4;
-  const FRETS_COUNT = 10; 
+  const FRETS_COUNT = 12; 
   const tuning = ['G', 'C', 'E', 'A']; 
   const chromaticScale = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     if (currentFingering[stringIdx] === fret) {
-      currentFingering[stringIdx] = 0; // Завжди 0 при знятті (означає відкриту струну або струну на капо)
+      currentFingering[stringIdx] = 0; 
     } else {
       currentFingering[stringIdx] = fret;
     }
@@ -409,23 +409,58 @@ document.addEventListener('DOMContentLoaded', () => {
     updateUI();
   }
 
+  // ==========================================
+  // ДОПОМІЖНА ФУНКЦІЯ: РОЗУМНЕ ОБРІЗАННЯ ТЕКСТУ ТІЛЬКИ ДЛЯ НАЗВ
+  // ==========================================
+  function formatTruncatedText(arr, separator) {
+    // ДИНАМІЧНИЙ ЛІМІТ: 1 назва для телефонів, 2 для десктопу
+    const limit = window.innerWidth <= 768 ? 1 : 2;
+
+    if (arr.length <= limit) {
+      return arr.join(separator).replace(/#/g, '♯');
+    }
+    
+    let visible = arr.slice(0, limit).join(separator).replace(/#/g, '♯');
+// Замість <br> робимо стильні плитки (теги) для кожного акорду
+    let fullList = arr.map(item => `<span class="popup-chord-tag">${item.replace(/#/g, '♯')}</span>`).join('');
+    
+    return `${visible} <span class="more-indicator" tabindex="0">...<div class="more-popup">${fullList}</div></span>`;
+  }
+
+  // Перемальовуємо текст, якщо користувач перевернув телефон чи змінив розмір вікна
+  window.addEventListener('resize', () => {
+    if (currentMode === 'build' || currentMode === 'library') {
+      checkChord(); 
+    }
+  });
+
   function checkChord() {
-    // Формуємо "реальні" лади (0 стає ладом каподастра)
     const effectiveFingering = currentFingering.map(f => f === 0 ? currentCapo : f);
     const targetKey = effectiveFingering.join(',');
     
-    // Шукаємо всі варіації в базі (відкидаючи зірочки при порівнянні)
     const matchedKeys = Object.keys(chordDatabase).filter(key => {
         return key.split('*')[0] === targetKey;
     });
 
     if (matchedKeys.length > 0) {
-        // Якщо знайшли (може бути кілька, напр. Db і C#), об'єднуємо їхні назви
-        const uniqueNames = [...new Set(matchedKeys.map(k => chordDatabase[k].name))].join(' / ');
-        const uniqueNotes = [...new Set(matchedKeys.map(k => chordDatabase[k].note))].join(' АБО ');
+        const uniqueNamesArr = [...new Set(matchedKeys.map(k => chordDatabase[k].name))];
+        const uniqueNotesArr = [...new Set(matchedKeys.map(k => chordDatabase[k].note))];
         
-        if (chordNameEl) chordNameEl.innerText = uniqueNames.replace(/#/g, '♯');
-        if (chordNotesEl) chordNotesEl.innerText = uniqueNotes;
+        // 1. Назви виводимо з кнопкою (якщо їх забагато)
+        if (chordNameEl) {
+            chordNameEl.innerHTML = formatTruncatedText(uniqueNamesArr, ' / ');
+        }
+        
+        // 2. Опис (ноти) виводимо БЕЗ кнопки за новою логікою
+        if (chordNotesEl) {
+            if (uniqueNotesArr.length <= 2) {
+                // Якщо 1 або 2 описи - виводимо їх повністю
+                chordNotesEl.innerHTML = uniqueNotesArr.join(' АБО ');
+            } else {
+                // Якщо більше 2-х - обрізаємо і залишаємо ТІЛЬКИ перший
+                chordNotesEl.innerHTML = uniqueNotesArr[0];
+            }
+        }
     } else {
         if (chordNameEl) chordNameEl.innerText = "---";
         const isCompletelyEmpty = effectiveFingering.every(f => f === 0);

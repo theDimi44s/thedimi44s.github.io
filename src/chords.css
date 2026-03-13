@@ -704,6 +704,108 @@
     visibility: hidden;
 }
 
+/* --- РОЗУМНЕ ОБРІЗАННЯ АКОРДІВ (ТРИ КРАПКИ ТА ПОПАПИ) --- */
+.more-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 0px 10px;
+  margin-left: 1px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 0.5em;
+  vertical-align: middle;
+  transition: all 0.3s ease;
+  position: relative;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.more-indicator:hover, .more-indicator:focus {
+background: rgba(255, 255, 255, 0.25);
+  outline: none;
+}
+
+.more-popup {
+  position: absolute;
+  /* ВІДОБРАЖЕННЯ ВНИЗ */
+  top: calc(100% + 10px); 
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px) scale(0.95);
+  background: rgba(30, 30, 46, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  padding: 16px;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 0.95rem;
+  font-family: inherit;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); 
+  z-index: 1000;
+  pointer-events: none;
+  line-height: 1.6;
+  text-align: center;
+  /* Обмеження висоти та скрол для великих списків */
+  max-height: 300px;
+  overflow-y: auto;
+  white-space: normal; /* Дозволяємо перенесення */
+  display: flex;
+  flex-wrap: wrap; /* Якщо не влазить в рядок - переносимо вниз */
+  justify-content: center; /* Центруємо всі акорди */
+  gap: 8px 10px; /* Відступи між акордами (вертикальний / горизонтальний) */
+}
+
+.popup-chord-tag {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  white-space: nowrap; /* Щоб сама назва одного акорду не розривалась на два рядки */
+  transition: background 0.2s;
+}
+
+.popup-chord-tag:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Десктоп: показ по наведенню або фокусу */
+.more-indicator:hover .more-popup,
+.more-indicator:focus .more-popup {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto; /* Дозволяємо скролити мишкою всередині */
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+/* Адаптив: на мобільному робимо фіксовану плашку знизу екрану */
+@media (max-width: 768px) {
+  .more-popup {
+    position: fixed;
+    bottom: 20px;
+    top: auto;
+    left: 50%;
+    width: 90%;
+    max-width: 400px;
+    max-height: 50vh; /* Щоб не перекривало весь екран на мобільному */
+    white-space: normal;
+    transform: translateX(-50%) translateY(20px) scale(0.95);
+  }
+  
+  .more-indicator:focus .more-popup {
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
 /* --- Плавна анімація панелі Каподастра --- */
 .capo-control {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);

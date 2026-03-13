@@ -2,9 +2,10 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
-<title>Chord Generator</title>
+<title>Chord Generator PRO</title>
 
 <style>
+
 body{
 background:#0f1117;
 color:#e6edf3;
@@ -13,24 +14,40 @@ padding:40px;
 }
 
 button{
-background:#238636;
+background:#30363d;
 border:none;
 padding:10px 16px;
 margin:5px;
 color:white;
 border-radius:8px;
 cursor:pointer;
+transition:0.2s;
+}
+
+button:hover{
+background:#3c444d;
+}
+
+button:active{
+transform:scale(0.96);
+background:#238636;
+}
+
+button.active{
+background:#238636;
+box-shadow:0 0 10px rgba(35,134,54,0.6);
 }
 
 textarea{
 width:100%;
-height:500px;
+height:520px;
 background:#0d1117;
 border:1px solid #30363d;
 color:#c9d1d9;
 padding:15px;
 border-radius:8px;
 font-family:monospace;
+font-size:14px;
 }
 
 select{
@@ -39,41 +56,52 @@ color:white;
 border:1px solid #30363d;
 padding:8px;
 border-radius:6px;
-margin-right:10px;
+margin:5px;
 }
-</style>
 
+</style>
 </head>
 
 <body>
 
 <h2>Генератор акордів</h2>
 
-<button onclick="setInstrument('ukulele')">Укулеле</button>
-<button onclick="setInstrument('baritone')">Баритон</button>
-<button onclick="setInstrument('guitar')">Гітара</button>
-<button onclick="setInstrument('guitalele')">Гіталеле</button>
-<button onclick="setInstrument('bass')">Бас</button>
+<div id="instrumentButtons">
+<button onclick="setInstrument('ukulele',this)">Укулеле</button>
+<button onclick="setInstrument('baritone',this)">Баритон</button>
+<button onclick="setInstrument('guitar',this)">Гітара</button>
+<button onclick="setInstrument('guitalele',this)">Гіталеле</button>
+<button onclick="setInstrument('bass',this)">Бас</button>
+</div>
 
 <br><br>
 
-<select id="chordType"></select>
-
-<select id="limit">
-<option value="6">6 позицій</option>
-<option value="10">10 позицій</option>
-<option value="20">20 позицій</option>
-<option value="40">40 позицій</option>
+Root
+<select id="root">
+<option>C</option><option>C#</option><option>Db</option>
+<option>D</option><option>D#</option><option>Eb</option>
+<option>E</option>
+<option>F</option><option>F#</option><option>Gb</option>
+<option>G</option><option>G#</option><option>Ab</option>
+<option>A</option><option>A#</option><option>Bb</option>
+<option>B</option>
 </select>
 
-<label>
-<input type="checkbox" id="proMode">
-Про-режим
-</label>
+Тип акорду
+<select id="type"></select>
+
+Кількість
+<select id="limit">
+<option value="6">6</option>
+<option value="10">10</option>
+<option value="20">20</option>
+<option value="40">40</option>
+</select>
 
 <br><br>
 
 <button onclick="generate()">Генерувати</button>
+<button onclick="generateAll()">Згенерувати ВСІ акорди</button>
 <button onclick="copyResult()">Скопіювати</button>
 
 <br><br>
@@ -84,11 +112,60 @@ margin-right:10px;
 
 const NOTES=["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
 
-function noteIndex(n){return NOTES.indexOf(n)}
-
-function getNote(open,fret){
-return NOTES[(noteIndex(open)+fret)%12]
+const FLAT_MAP={
+Db:"C#",
+Eb:"D#",
+Gb:"F#",
+Ab:"G#",
+Bb:"A#"
 }
+
+const NOTE_NAMES={
+C:"До",
+D:"Ре",
+E:"Мі",
+F:"Фа",
+G:"Соль",
+A:"Ля",
+B:"Сі"
+}
+
+const intervals={
+
+"": [0,4,7],
+"m":[0,3,7],
+"sus2":[0,2,7],
+"sus4":[0,5,7],
+"dim":[0,3,6],
+"aug":[0,4,8],
+
+"6":[0,4,7,9],
+"m6":[0,3,7,9],
+
+"7":[0,4,7,10],
+"maj7":[0,4,7,11],
+"m7":[0,3,7,10],
+
+"9":[0,4,7,10,2],
+"m9":[0,3,7,10,2],
+"maj9":[0,4,7,11,2],
+
+"11":[0,4,7,10,2,5],
+"13":[0,4,7,10,2,5,9],
+
+"dim7":[0,3,6,9],
+"m7b5":[0,3,6,10],
+
+"7sus4":[0,5,7,10],
+"7#9":[0,4,7,10,3],
+"7b9":[0,4,7,10,1],
+
+"add9":[0,4,7,2],
+"m(add9)":[0,3,7,2]
+
+}
+
+const types=Object.keys(intervals)
 
 const instruments={
 ukulele:["G","C","E","A"],
@@ -100,41 +177,23 @@ bass:["E","A","D","G"]
 
 let tuning=instruments.ukulele
 
-function setInstrument(name){
+function setInstrument(name,btn){
 tuning=instruments[name]
+document.querySelectorAll("#instrumentButtons button")
+.forEach(b=>b.classList.remove("active"))
+btn.classList.add("active")
 }
 
-const chordTypes={
-
-major:{intervals:[0,4,7],required:[0,4]},
-minor:{intervals:[0,3,7],required:[0,3]},
-
-"7":{intervals:[0,4,7,10],required:[0,4,10]},
-maj7:{intervals:[0,4,7,11],required:[0,4,11]},
-m7:{intervals:[0,3,7,10],required:[0,3,10]},
-
-"6":{intervals:[0,4,7,9],required:[0,4,9]},
-m6:{intervals:[0,3,7,9],required:[0,3,9]},
-
-add9:{intervals:[0,4,7,14],required:[0,4,14]},
-
-sus2:{intervals:[0,2,7],required:[0,2]},
-sus4:{intervals:[0,5,7],required:[0,5]},
-
-dim:{intervals:[0,3,6],required:[0,3,6]},
-dim7:{intervals:[0,3,6,9],required:[0,3,6,9]},
-
-aug:{intervals:[0,4,8],required:[0,4,8]}
-
+function normalize(root){
+return FLAT_MAP[root] || root
 }
 
-const typeSelect=document.getElementById("chordType")
+function noteIndex(n){
+return NOTES.indexOf(n)
+}
 
-for(let t in chordTypes){
-let o=document.createElement("option")
-o.value=t
-o.textContent=t
-typeSelect.appendChild(o)
+function getNote(open,fret){
+return NOTES[(noteIndex(open)+fret)%12]
 }
 
 function span(frets){
@@ -162,150 +221,249 @@ arr.pop()
 
 helper([])
 return results
+
 }
 
-function getIntervals(notes,root){
+function detectChordNotes(root,type){
 
-let r=noteIndex(root)
+let rootNorm=normalize(root)
 
-let ints=[]
+let idxRoot=noteIndex(rootNorm)
 
-for(let n of notes){
-ints.push((noteIndex(n)-r+12)%12)
+let ints=intervals[type]
+
+return ints.map(i=>NOTES[(idxRoot+i)%12])
+
 }
 
-return [...new Set(ints)]
-}
+function generateNormal(root,type,limit){
 
-function rootIsStrong(notes,root){
-
-let lowest=notes[0]
-
-let count=notes.filter(n=>n===root).length
-
-if(lowest===root) return true
-if(count>=2) return true
-
-return false
-}
-
-function validChord(notes,root,type){
-
-let data=chordTypes[type]
-
-if(!rootIsStrong(notes,root)) return false
-
-let ints=getIntervals(notes,root)
-
-for(let r of data.required){
-if(!ints.includes(r%12)) return false
-}
-
-for(let i of ints){
-
-let ok=false
-
-for(let a of data.intervals){
-if(i===a%12) ok=true
-}
-
-if(!ok) return false
-}
-
-return true
-}
-
-function proFilter(notes){
-
-let unique=[...new Set(notes)]
-
-if(unique.length<3) return false
-
-let counts={}
-
-for(let n of notes){
-
-counts[n]=(counts[n]||0)+1
-
-if(counts[n]>2) return false
-}
-
-return true
-}
-
-function detectBarre(frets){
-
-let min=Math.min(...frets)
-
-if(min===0) return null
-
-let count=frets.filter(f=>f===min).length
-
-if(count>=2) return min
-
-return null
-}
-
-function generate(){
-
-let type=document.getElementById("chordType").value
-let limit=parseInt(document.getElementById("limit").value)
-let pro=document.getElementById("proMode").checked
+let needed=detectChordNotes(root,type)
 
 let fretsAll=generateFrets(tuning.length,12)
 
-let output=[]
-
-for(let root of NOTES){
-
-let count=0
+let results=[]
 
 for(let frets of fretsAll){
 
-if(count>=limit) break
 if(span(frets)>4) continue
 
 let notes=[]
 
-for(let i=0;i<frets.length;i++){
+for(let i=0;i<frets.length;i++)
 notes.push(getNote(tuning[i],frets[i]))
+
+let ok=true
+
+for(let n of notes)
+if(!needed.includes(n)) ok=false
+
+if(!ok) continue
+
+if(!notes.includes(normalize(root))) continue
+
+results.push({frets})
+
+if(results.length>=limit) break
+
 }
 
-if(!validChord(notes,root,type)) continue
+return results
+}
 
-if(pro && !proFilter(notes)) continue
+function generateBarre(root,type){
 
-let key=frets.join(",")
+let needed=detectChordNotes(root,type)
 
-let barre=detectBarre(frets)
+let results=[]
 
-let name=root+type
+for(let barre=1;barre<=12;barre++){
 
-let obj
+let frets=new Array(tuning.length).fill(barre)
 
-if(barre){
-obj=`"${key}": { name: "${name}", note: "${name}", barre: ${barre} },`
+let notes=[]
+
+for(let i=0;i<tuning.length;i++)
+notes.push(getNote(tuning[i],frets[i]))
+
+let ok=true
+
+for(let n of notes)
+if(!needed.includes(n)) ok=false
+
+if(!ok) continue
+
+results.push({frets,barre})
+
+}
+
+return results
+}
+
+function generateBarreExtra(root,type){
+
+let needed=detectChordNotes(root,type)
+
+let results=[]
+
+for(let barre=1;barre<=12;barre++){
+
+for(let add=1;add<=3;add++){
+
+let frets=[]
+
+for(let i=0;i<tuning.length;i++){
+
+let fret=barre
+
+if(i===1) fret=barre+add
+
+frets.push(fret)
+
+}
+
+let notes=[]
+
+for(let i=0;i<frets.length;i++)
+notes.push(getNote(tuning[i],frets[i]))
+
+let ok=true
+
+for(let n of notes)
+if(!needed.includes(n)) ok=false
+
+if(!ok) continue
+
+results.push({frets,barre,extra:true})
+
+}
+
+}
+
+return results
+}
+
+function formatChord(root,type,positions,limit){
+
+let chordName=root+type
+
+let baseNote=NOTE_NAMES[root[0]]||root
+
+let output=[]
+
+for(let i=0;i<positions.length && i<limit;i++){
+
+let p=positions[i]
+
+let key=p.frets.join(",")
+
+let label=i===0
+?`${baseNote} ${type||"мажор"}`
+:`${baseNote} ${type||"мажор"} (Альт.)`
+
+if(p.barre){
+
+if(p.extra){
+
+output.push(`"${key}*barre": { name: "${chordName}", note: "${label} (З повним баре)", barre: ${p.barre} },`)
+
 }else{
-obj=`"${key}": { name: "${name}", note: "${name}" },`
+
+output.push(`"${key}": { name: "${chordName}", note: "${label}", barre: ${p.barre} },`)
+
 }
 
-output.push(obj)
+}else{
 
-count++
+output.push(`"${key}*${chordName}": { name: "${chordName}", note: "${label}" },`)
+
+}
+
+}
+
+return output
+
+}
+
+function generate(){
+
+let root=document.getElementById("root").value
+let type=document.getElementById("type").value
+let limit=parseInt(document.getElementById("limit").value)
+
+let normal=generateNormal(root,type,limit)
+
+let barre=generateBarre(root,type)
+
+let barreExtra=generateBarreExtra(root,type)
+
+let all=[...normal,...barre,...barreExtra]
+
+let lines=formatChord(root,type,all,limit)
+
+document.getElementById("output").value=lines.join("\n")
+
+}
+
+function generateAll(){
+
+let limit=parseInt(document.getElementById("limit").value)
+
+let roots=[
+"C","C#","Db","D","D#","Eb","E",
+"F","F#","Gb","G","G#","Ab",
+"A","A#","Bb","B"
+]
+
+let output=[]
+
+for(let root of roots){
+
+for(let type of types){
+
+let normal=generateNormal(root,type,limit)
+let barre=generateBarre(root,type)
+let barreExtra=generateBarreExtra(root,type)
+
+let all=[...normal,...barre,...barreExtra]
+
+if(all.length===0) continue
+
+output.push(`// Акорд ${root}${type}`)
+
+let lines=formatChord(root,type,all,limit)
+
+output.push(...lines)
+
+output.push("")
+
 }
 
 }
 
 document.getElementById("output").value=output.join("\n")
+
 }
 
 function copyResult(){
-navigator.clipboard.writeText(document.getElementById("output").value)
+navigator.clipboard.writeText(
+document.getElementById("output").value
+)
+}
+
+const typeSelect=document.getElementById("type")
+
+for(let t of types){
+
+let opt=document.createElement("option")
+opt.value=t
+opt.text=t||"maj"
+
+typeSelect.appendChild(opt)
+
 }
 
 </script>
 
 </body>
-<script src="./src/protect.js" defer></script>
-
 </html>
